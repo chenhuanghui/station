@@ -75,7 +75,11 @@ export default class PostShow extends React.Component {
                             <div className="row align-items-center">
                                 <div className="col-auto">
                                     <a href="#!" className="avatar">
-                                        <img src={postContent ? postContent.fields.postByAvatar[0].url : "/assets/img/avatars/profiles/avatar-1.jpg"} alt={postContent && postContent.fields.postByName} className="avatar-img rounded-circle"/>
+                                        {postContent && postContent.fields.postByAvatar
+                                        ?    <img src={postContent.fields.postByAvatar[0].url} alt={postContent && postContent.fields.postByName} className="avatar-img rounded-circle"/>
+                                        :    <img src="/assets/img/avatars/profiles/avatar-1.jpg" alt={postContent && postContent.fields.postByName} className="avatar-img rounded-circle"/>
+                                        }
+                                        
                                     </a>
                                 </div>
                                 <div className="col ml-n2">
