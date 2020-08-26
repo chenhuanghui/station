@@ -5,6 +5,10 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 
+
+// COMPONENT
+import CommentInput from '../../component/comments/comment-input'
+
 // ====================================
 // INIT GLOBAL VARIABLES
 const AirtablePlus = require('airtable-plus');  
@@ -165,32 +169,9 @@ export default class PostShow extends React.Component {
 
                         <hr/>
 
-                        <div className="row">
-                            <div className="col-auto">
-
-                                <div className="avatar avatar-sm">
-                                    <img src="/assets/img/avatars/profiles/avatar-1.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                </div>
-                            </div>
-                            <div className="col ml-n2">
-
-                                <form className="mt-1">
-                                    <label className="sr-only">Leave a comment...</label>
-                                    <textarea className="form-control form-control-flush" data-toggle="autosize" rows="1" placeholder="Leave a comment" style={{"overflow": "hidden", "overflowWrap": "break-word", "height": "40px"}}></textarea>
-                                </form>
-                            </div>
-                            <div className="col-auto align-self-end">
-
-                                <div className="text-muted mb-2">
-                                    <a className="text-reset mr-3" href="#!" data-toggle="tooltip" title="" data-original-title="Add photo"> <i className="fe fe-camera"></i>
-                                    </a>
-                                    <a className="text-reset mr-3" href="#!" data-toggle="tooltip" title="" data-original-title="Attach file"> <i className="fe fe-paperclip"></i>
-                                    </a>
-                                    <a className="text-reset" href="#!" data-toggle="tooltip" title="" data-original-title="Record audio"> <i className="fe fe-mic"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <CommentInput>
+                            <span className="hide" post={curPID}></span>
+                        </CommentInput>
                     </div>
                 </div>  
             </>     
