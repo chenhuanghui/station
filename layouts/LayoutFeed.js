@@ -1,4 +1,10 @@
+// REACT LIBRARIES
 import React, { useState, useEffect, useRef } from 'react';
+
+// COMPONENT LIBRARIES
+import NavBar from '../component/nav/nav_bar'
+
+// COMPONENT LIBRARIES
 
 export default class LayoutFeed extends React.Component {
     constructor(props) {
@@ -7,7 +13,8 @@ export default class LayoutFeed extends React.Component {
         this.state = {
         }
     }
-    componentDidMount() {
+ 
+   componentDidMount() {
         
     }
 
@@ -15,11 +22,10 @@ export default class LayoutFeed extends React.Component {
                 
     }
 
-    
-
     render() {        
         return (
             <>
+            <NavBar />
             hello
             </>
             
