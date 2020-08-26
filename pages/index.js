@@ -1,13 +1,6 @@
-import LayoutFeed from "../layouts/LayoutFeed"
-const FeedIndex = props => (
-    <LayoutFeed />
+import LayoutIndex from "../layouts/LayoutIndex"
+const Index = props => (
+    <LayoutIndex />
 );
       
-export default FeedIndex;
-
-
-// export default function HomePage() {
-//     return <div>Welcome to Next.js!</div>
-// }
-  
-// // export default HomePage
+export default Index;
