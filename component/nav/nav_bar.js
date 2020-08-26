@@ -101,23 +101,9 @@ export default class NavBar extends React.Component {
                 </div>
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="sidebarIcon"> 
-                  <Link href="/feed/recKcGBTwDEvjGjj4">
-                    <a className="dropdown-item">Ticket</a>
-                  </Link>
-                
-                <hr className="dropdown-divider" />
-                
-                {/* <Link href="/documents"><a className="dropdown-item">Tài liệu</a></Link>
-                
-                <hr className="dropdown-divider" />
-                <Link href="/account" ><a className="dropdown-item">Tài khoản</a></Link>
-                <Link href="#" ><a className="dropdown-item">Hóa đơn</a></Link>                
-                
-                { data && data.roleValue && parseInt(data.roleValue)<=2
-                ? <Link href="/config" ><a className="dropdown-item">Thiết lập</a></Link>                
-                : ''
-                } */}
-
+                  <Link href="/#">
+                    <a className="dropdown-item">Tài khoản</a>
+                  </Link>                               
                 <hr className="dropdown-divider" />
                 <span className="dropdown-item logout">Logout</span>
               </div>
@@ -132,14 +118,6 @@ export default class NavBar extends React.Component {
                   <a className="nav-link active"><i className="fe fe-home"></i> Ticket</a>
                 </Link>
               </li>
-            </ul>
-
-            <hr className="navbar-divider my-3" />
-            {/* <h6 className="navbar-heading">Ứng dụng</h6> */}
-            <ul className="navbar-nav">
-              {/* <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-clipboard"></i> Transaction</a></Link></li>
-              <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-clipboard"></i> CRM</a></Link></li>
-              <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-book-open"></i> Học viện</a></Link></li> */}
             </ul>
 
             {/* Push content down */}
@@ -164,8 +142,8 @@ export default class NavBar extends React.Component {
 
                 {/* Menu */}
                 <div className="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                  <Link href="/documents" >
-                    <a className="dropdown-item">Tài liệu</a>
+                  <Link href="/#" >
+                    <a className="dropdown-item">Tài khoản</a>
                   </Link>
                   
                   <hr className="dropdown-divider" />
