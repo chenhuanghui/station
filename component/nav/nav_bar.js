@@ -100,14 +100,13 @@ export default class NavBar extends React.Component {
                 </div>
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="sidebarIcon"> 
-                {data && data.brandName && data.brandName.map((b,index) => (
-                  <Link href="/overview/{ID}" as={`/overview/${data.brandID[index]}`} key={b.toString()}>
-                    <a className="dropdown-item">{b}</a>
+                  <Link href="/feed/recKcGBTwDEvjGjj4">
+                    <a className="dropdown-item">Ticket</a>
                   </Link>
-                ))}
                 
                 <hr className="dropdown-divider" />
-                <Link href="/documents"><a className="dropdown-item">Tài liệu</a></Link>
+                
+                {/* <Link href="/documents"><a className="dropdown-item">Tài liệu</a></Link>
                 
                 <hr className="dropdown-divider" />
                 <Link href="/account" ><a className="dropdown-item">Tài khoản</a></Link>
@@ -116,7 +115,7 @@ export default class NavBar extends React.Component {
                 { data && data.roleValue && parseInt(data.roleValue)<=2
                 ? <Link href="/config" ><a className="dropdown-item">Thiết lập</a></Link>                
                 : ''
-                }
+                } */}
 
                 <hr className="dropdown-divider" />
                 <span className="dropdown-item logout">Logout</span>
@@ -128,27 +127,18 @@ export default class NavBar extends React.Component {
             {/* menu group block */}
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link href="/">
-                  <a className="nav-link active"><i className="fe fe-home"></i> Tổng quan</a>
+                <Link href="/feed/recKcGBTwDEvjGjj4">
+                  <a className="nav-link active"><i className="fe fe-home"></i> Ticket</a>
                 </Link>
-                <Link href="/products">
-                  <a className="nav-link"><i className="fe fe-file"></i> Sản phẩm</a>
-                </Link>
-                <Link href="/staffs">
-                  <a className="nav-link"><i className="fe fe-user"></i> Nhân sự</a>
-                </Link>  
-                <Link href="/equipments">
-                  <a className="nav-link"><i className="fe fe-shopping-bag"></i> Thiết bị</a>
-                </Link>  
               </li>
             </ul>
 
             <hr className="navbar-divider my-3" />
-            <h6 className="navbar-heading">Ứng dụng</h6>
+            {/* <h6 className="navbar-heading">Ứng dụng</h6> */}
             <ul className="navbar-nav">
-              <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-clipboard"></i> Transaction</a></Link></li>
+              {/* <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-clipboard"></i> Transaction</a></Link></li>
               <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-clipboard"></i> CRM</a></Link></li>
-              <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-book-open"></i> Học viện</a></Link></li>
+              <li className="nav-item"><Link href="#"><a className="nav-link"><i className="fe fe-book-open"></i> Học viện</a></Link></li> */}
             </ul>
 
             {/* Push content down */}
@@ -170,27 +160,13 @@ export default class NavBar extends React.Component {
                       }
                     </div>
                 </a>
+
                 {/* Menu */}
                 <div className="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                  {data && data.brandName && data.brandName.map((b,index) => (
-                    <Link href="/overview/{ID}" as={`/overview/${data.brandID[index]}`} key={b.toString()}>
-                      <a className="dropdown-item">{b}</a>
-                    </Link>
-                  ))}
-                  
-                  <hr className="dropdown-divider" />
                   <Link href="/documents" >
                     <a className="dropdown-item">Tài liệu</a>
                   </Link>
                   
-                  <hr className="dropdown-divider" />
-                  <Link href="/account" ><a className="dropdown-item">Tài khoản</a></Link>
-                  <Link href="#" ><a className="dropdown-item">Hóa đơn</a></Link>
-                  { data && data.roleValue && parseInt(data.roleValue)<=2
-                  ? <Link href="/config" ><a className="dropdown-item">Thiết lập</a></Link>                
-                  : ''
-                  }
-
                   <hr className="dropdown-divider" />
                   <span className="dropdown-item logout">Logout</span>
                 </div>
