@@ -69,7 +69,6 @@ export default class PostShow extends React.Component {
         return (
             <>
                 {this.props.children}
-
                 <div className="card">
                     <div className="card-body">
                         <div className="mb-3">
@@ -83,7 +82,7 @@ export default class PostShow extends React.Component {
                                     <h4 className="mb-1">{postContent && postContent.fields.postByName}</h4>
                                     <p className="card-text small text-muted"> 
                                         <span className="fe fe-clock mr-2"></span> 
-                                        <time datetime="2018-05-24">{postContent && postContent.fields.createdAt}</time>
+                                        <time dateTime="2018-05-24">{postContent && postContent.fields.createdAt}</time>
                                     </p>
                                 </div>
                             </div>

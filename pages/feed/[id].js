@@ -39,21 +39,10 @@ async function updateData(rowID, data,tbName) {
     }
 }
 
-export default function LayoutCabinDetail () {
+function LayoutFeedByStation ({stationPost}) {
     const router = useRouter();
     const cookies = parseCookies();
     const [sID, setStationID] = useState(null);
-
-    function getPostByStationID(stationID) {
-        (async () => {
-            try {
-                
-            }
-            catch(e) {
-                console.error(e);
-            }
-        })();
-    }
 
     useEffect(() => {        
         // if not user --> redirect to Sign In page
@@ -71,10 +60,16 @@ export default function LayoutCabinDetail () {
         console.log('router id 1: ',router.query.id)
 
         // when docID was assigned successful retrieve data from Contenful
-        if(sID === router.query.id) {
-            console.log("______ welcome: ", sID)
-
-        }             
+        // if(sID === router.query.id) {
+        //     console.log("______ welcome: ", sID)
+        //     retrieveData({
+        //         filterByFormula: `Station = "${sID}"`,
+        //     },"StationPost")
+        //     .then(res => {
+        //         console.log("post station:", res)
+        //         setStationPost(res)
+        //     })
+        // }             
 
     },[sID])
 
@@ -89,14 +84,35 @@ export default function LayoutCabinDetail () {
                                 <span className="hide" data={sID}></span>
                             </PostInput>
                             
-                            <PostShow>
-                                <span className="hide" postID="recJSjMYKXLU9typ8"></span>
-                            </PostShow>
+                            {stationPost && stationPost.map((item, index) => (
+                                <PostShow key={index}>
+                                    <span className="hide" postID={item.fields.Post[0]}></span>
+                                </PostShow>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div> 
         </>
     )
+}
+
+LayoutFeedByStation.getInitialProps = async (ctx) => {
+    console.log("______ initialprops:",)
+    // console.log("______ welcome: ", cookies.stationID)
+    
+    const readRes = await airtable.read({
+        filterByFormula: `Station = "recKcGBTwDEvjGjj4"`,
+    },{tableName:"StationPost"});
+    return { stationPost: readRes }
+    
 
 }
+
+// Page.getInitialProps = async (ctx) => {
+//     const res = await fetch('https://api.github.com/repos/vercel/next.js')
+//     const json = await res.json()
+//     return { stars: json.stargazers_count }
+//   }
+
+export default LayoutFeedByStation
