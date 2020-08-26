@@ -21,13 +21,26 @@ const cookies = parseCookies();
 TimeAgo.addLocale(en)
 
 // FUNCTIONS GLOBAL
-async function retrivePostByID(pID) {
+async function retrievePostByID(pID) {
     try {
         const postRetrieve = await airtable.read({
             filterByFormula: `ID = "${pID}"`,
             maxRecords:1
         },{tableName:"Post"});
         return postRetrieve[0]
+
+      } catch(e) {
+        console.error(e);
+      }
+}
+
+async function retrieveCommentByPostID(pID) {
+    try {
+        const commentPostRetrieve = await airtable.read({
+            filterByFormula: `Post = "${pID}"`,
+            sort: [ {field: 'createdAt', direction: 'asc'},]
+        },{tableName:"PostComment"});
+        return commentPostRetrieve
 
       } catch(e) {
         console.error(e);
@@ -58,17 +71,24 @@ export default class PostShow extends React.Component {
         if(curPostID !== prevPostID) {
             console.log('___UPDATED')
             currentComponent.setState({postID:curPostID})
-            retrivePostByID(curPostID)
+            
+            retrievePostByID(curPostID)
             .then (res => {
-                console.log("res: ", res)
+                console.log("post: ", res)
                 currentComponent.setState({postContent:res})
+            })
+
+            retrieveCommentByPostID(curPostID)
+            .then (res => {
+                console.log("comment: ", res)
+                currentComponent.setState({comments:res})
             })
         }
     }
 
     render() {        
         const curPID = this.props.children.props.postID
-        const {postContent} = this.state
+        const {postContent, comments} = this.state
         const timeAgo = new TimeAgo('en-US')
         // {timeAgo.format(Date.now() - 60 * 1000,'twitter')}
         return (
@@ -91,7 +111,8 @@ export default class PostShow extends React.Component {
                                     <h4 className="mb-1">{postContent && postContent.fields.postByName}</h4>
                                     <p className="card-text small text-muted"> 
                                         <span className="fe fe-clock mr-2"></span> 
-                                        <time dateTime="2018-05-24">{postContent && postContent.fields.createdAt ? new Date(postContent.fields.createdAt).toDateString():null}</time>
+                                        <time dateTime="2018-05-24">{postContent && postContent.fields.createdAt ? `${new Date(postContent.fields.createdAt).toLocaleTimeString()}, ${new Date(postContent.fields.createdAt).toLocaleDateString()}`:null}</time>
+                                        
                                     </p>
                                 </div>
                             </div>
@@ -124,9 +145,12 @@ export default class PostShow extends React.Component {
 
                         <hr/>
                         
-                        <CommentShow>
-                            <span className="hide"></span>
-                        </CommentShow>
+                        {comments && comments.map((item, index) => (
+                            <CommentShow photo={item.fields.commentAttachments} author={item.fields.commentByName} avatar={item.fields.commentByAvatar} comment={item.fields.commentDesc} time={item.fields.createdAt} key={index}>
+                                <span className="hide"></span>
+                            </CommentShow>
+                        ))}
+                        
                         
                         <hr/>
                         <CommentInput>
