@@ -10,6 +10,7 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 // COMPONENT
 import NavBar from '../../component/nav/nav_bar'
 import PostInput from '../../component/posts/post-input'
+import PostShow from '../../component/posts/post-show'
 
 // COMPONENT LIBRARIES
 const AirtablePlus = require('airtable-plus');  
@@ -87,6 +88,10 @@ export default function LayoutCabinDetail () {
                             <PostInput>
                                 <span className="hide" data={sID}></span>
                             </PostInput>
+                            
+                            <PostShow>
+                                <span className="hide" postID="recJSjMYKXLU9typ8"></span>
+                            </PostShow>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import DatePicker from "react-datepicker";
-
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 // ====================================
 // INIT GLOBAL VARIABLES
@@ -40,7 +38,7 @@ async function createPost(content) {
     }
 }
 
-export default class DateTimeCustom extends React.Component {
+export default class PostInput extends React.Component {
     constructor(props) {
         super(props);
 

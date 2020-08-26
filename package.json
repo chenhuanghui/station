@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "airtable-plus": "^1.0.4",
+    "javascript-time-ago": "^2.0.13",
     "jquery": "^3.5.1",
     "next": "9.4.4",
     "nookies": "^2.3.2",
