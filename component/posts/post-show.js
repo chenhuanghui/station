@@ -8,6 +8,7 @@ import en from 'javascript-time-ago/locale/en'
 
 // COMPONENT
 import CommentInput from '../../component/comments/comment-input'
+import CommentShow from '../../component/comments/comment-show'
 
 // ====================================
 // INIT GLOBAL VARIABLES
@@ -122,53 +123,12 @@ export default class PostShow extends React.Component {
                         </div>
 
                         <hr/>
-                        <div className="comment mb-3">
-                            <div className="row">
-                                <div className="col-auto">
-                                    <a className="avatar avatar-sm" href="profile-posts.html">
-                                        <img src="/assets/img/avatars/profiles/avatar-2.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                    </a>
-                                </div>
-                                <div className="col ml-n2">
-                                    <div className="comment-body">
-                                        <div className="row">
-                                            <div className="col">
-                                                <h5 className="comment-title">Ab Hadley</h5>
-                                            </div>
-                                            <div className="col-auto">
-                                                <time className="comment-time">11:12</time>
-                                            </div>
-                                        </div>
-                                        <p className="comment-text">Looking good Dianna! I like the image grid on the left, but it feels like a lot to process and doesn't really <em>show</em> me what the product does? I think using a short looping video or something similar demo'ing the product might be better?</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="comment mb-3">
-                            <div className="row">
-                                <div className="col-auto">
-                                    <a className="avatar avatar-sm" href="profile-posts.html">
-                                        <img src="/assets/img/avatars/profiles/avatar-3.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                    </a>
-                                </div>
-                                <div className="col ml-n2">
-                                    <div className="comment-body">
-                                        <div className="row">
-                                            <div className="col"><h5 className="comment-title">Adolfo Hess</h5></div>
-                                            <div className="col-auto">
-                                                <time className="comment-time">11:12</time>
-                                            </div>
-                                        </div>
-
-                                        <p className="comment-text">Any chance you're going to link the grid up to a public gallery of sites built with Launchday?</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
+                        
+                        <CommentShow>
+                            <span className="hide"></span>
+                        </CommentShow>
+                        
                         <hr/>
-
                         <CommentInput>
                             <span className="hide" post={curPID}></span>
                         </CommentInput>

@@ -30,22 +30,6 @@ export default class CommentShow extends React.Component {
         }
     }
     componentDidMount() {
-        $(document).on('click','.btn-action-post', function(){
-            $(this).append(`<div class="spinner-grow spinner-grow-sm" role="status"><span class="sr-only">Loading...</span></div>`)
-            
-            if ($("#post-content").val() === '') {
-                alert('Vui lòng nhập nội dung')
-                return;
-            }
-            // var imageURL = "";
-            
-            // if ($('.file-upload-show').attr("data") !== "") {
-            //     imageURL = $('.file-upload-show').attr("data")
-            //     console.log("imageURL: ", imageURL)
-            // }
-            
-
-        })
     }
 
     componentDidUpdate(prevProps, prevState) {
