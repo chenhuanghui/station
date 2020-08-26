@@ -8,7 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@loadable/component": "^5.13.1",
     "airtable-plus": "^1.0.4",
+    "filestack-react": "^3.2.1",
     "javascript-time-ago": "^2.0.13",
     "jquery": "^3.5.1",
     "next": "9.4.4",
