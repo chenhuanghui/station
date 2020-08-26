@@ -34,6 +34,8 @@ async function createPost(content, imagesURL) {
             Post: [`${createPost.id}`]            
         },{tableName:"PostAccount"});
         console.log("PostAccount: ", createPostAccount)
+
+        return createPostAccount;
     }
     catch(e) {
         console.error(e);
@@ -49,13 +51,13 @@ export default class PostInput extends React.Component {
     }
     componentDidMount() {
         $(document).on('click','.btn-action-post', function(){
-            $(this).append(`<div className="spinner-grow spinner-grow-sm" role="status"></div>`)
+            $(this).append(`<div class="spinner-grow spinner-grow-sm" role="status"><span class="sr-only">Loading...</span></div>`)
             
             if ($("#post-content").val() === '') {
                 alert('Vui lòng nhập nội dung')
                 return;
             }
-            var imageURL = null;
+            var imageURL = "";
             
             if ($('.file-upload-show').attr("data") !== "") {
                 imageURL = $('.file-upload-show').attr("data")
