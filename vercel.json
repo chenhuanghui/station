@@ -1,0 +1,8 @@
+{
+    "build": {
+      "env": {
+        "AIR_TABLE_BASE_ID_STATION":"@air_table_base_id_station",
+        "AIR_TABLE_API_KEY_STATION":"@air_table_api_key_station"
+      }
+    }
+  }
