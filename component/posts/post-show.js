@@ -93,42 +93,45 @@ export default class PostShow extends React.Component {
 
                         <p className="text-center mb-3">
                             { postContent && postContent.fields.photos
-                            ? <img src={postContent.fields.photos[0].url} alt="..." className="img-fluid rounded"/>
-                            : <img src="/assets/img/posts/post-1.jpg" alt="..." className="img-fluid rounded"/>
+                            ? 
+                            <>
+                                <img src={postContent.fields.photos[0].url} alt="..." className="img-fluid rounded"/>
+                                <div className="mb-3">
+                                    <div className="row">
+                                        <div className="col">
+                                            <span className="btn btn-sm btn-white mr-2">
+                                                👍 {postContent && postContent.fields.like}
+                                            </span>
+                                            <a href="#!" className="btn btn-sm btn-white">
+                                                😬 {postContent && postContent.fields.dislike}
+                                            </a>
+                                            
+                                        </div>
+                                        {/* <div className="col-auto mr-n3">
+                                            <div className="avatar-group d-none d-sm-flex">
+                                                <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Ab Hadley">
+                                                    <img src="/assets/img/avatars/profiles/avatar-2.jpg" alt="..." className="avatar-img rounded-circle"/>
+                                                </a>
+                                                <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Adolfo Hess">
+                                                    <img src="/assets/img/avatars/profiles/avatar-3.jpg" alt="..." className="avatar-img rounded-circle"/>
+                                                </a>
+                                                <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Daniela Dewitt">
+                                                    <img src="/assets/img/avatars/profiles/avatar-4.jpg" alt="..." className="avatar-img rounded-circle"/>
+                                                </a>
+                                                <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Miyah Myles">
+                                                    <img src="/assets/img/avatars/profiles/avatar-5.jpg" alt="..." className="avatar-img rounded-circle"/>
+                                                </a>
+                                            </div>
+                                        </div> */}
+                                        {/* <div className="col-auto">
+                                            <a href="#!" className="btn btn-sm btn-white">Share</a>
+                                        </div> */}
+                                    </div>
+                                </div>
+                            </>
+                            : null
                             }
                         </p>
-                        <div className="mb-3">
-                            <div className="row">
-                                <div className="col">
-                                    <span className="btn btn-sm btn-white mr-2">
-                                        👍 {postContent && postContent.fields.like}
-                                    </span>
-                                    <a href="#!" className="btn btn-sm btn-white">
-                                        😬 {postContent && postContent.fields.dislike}
-                                    </a>
-                                    
-                                </div>
-                                {/* <div className="col-auto mr-n3">
-                                    <div className="avatar-group d-none d-sm-flex">
-                                        <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Ab Hadley">
-                                            <img src="/assets/img/avatars/profiles/avatar-2.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                        </a>
-                                        <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Adolfo Hess">
-                                            <img src="/assets/img/avatars/profiles/avatar-3.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                        </a>
-                                        <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Daniela Dewitt">
-                                            <img src="/assets/img/avatars/profiles/avatar-4.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                        </a>
-                                        <a href="profile-posts.html" className="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Miyah Myles">
-                                            <img src="/assets/img/avatars/profiles/avatar-5.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                        </a>
-                                    </div>
-                                </div> */}
-                                {/* <div className="col-auto">
-                                    <a href="#!" className="btn btn-sm btn-white">Share</a>
-                                </div> */}
-                            </div>
-                        </div>
 
                         <hr/>
                         <div className="comment mb-3">
