@@ -103,7 +103,7 @@ LayoutFeedByStation.getInitialProps = async (ctx) => {
     
     const readRes = await airtable.read({
         filterByFormula: `Station = "recKcGBTwDEvjGjj4"`,
-        sort: [ {field: 'posCreatedAt', direction: 'asc'},]
+        sort: [ {field: 'posCreatedAt', direction: 'desc'},]
     },{tableName:"StationPost"});
     return { stationPost: readRes }
     
