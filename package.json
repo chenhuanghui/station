@@ -1,7 +1,16 @@
 {
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start"
-      }
+  "name": "cabinadmin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+  },
+  "dependencies": {
+    "airtable-plus": "^1.0.4",
+    "nookies": "^2.3.2",
+    "select2-react-component": "^5.10.2",
+    "react-datepicker": "^3.1.3"
+  }
 }
