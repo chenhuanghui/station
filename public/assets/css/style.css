@@ -1,0 +1,511 @@
+.modal.show {
+    display: block;
+}
+.modal-backdrop {
+    display: none;
+}
+.rectangle{
+    position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+/* Primary */
+
+background: #2C7BE5;
+border: 1px solid #2C7BE5;
+box-sizing: border-box;
+border-radius: 6px;
+}
+
+.signup-basic  {
+    position: relative;
+width: 1435px;
+height: 926px;
+background: #FFFFFF;
+}
+.haveaccount{
+    position: absolute;
+left: 37.35%;
+right: 37.28%;
+top: 81.21%;
+bottom: 16.63%;
+
+font-family: Work Sans;
+font-style: normal;
+font-weight: 600;
+font-size: 13px;
+line-height: 152.49%;
+/* identical to box height, or 20px */
+
+text-align: center;
+letter-spacing: -0.01em;
+
+color: #6E84A3;
+}
+.signup{
+  position: absolute;
+width: 369px;
+height: 417px;
+left: 536px;
+top: 255px;
+
+}
+.signup-header
+{
+    position: absolute;
+left: 0.27%;
+right: 1.36%;
+top: 0.24%;
+bottom: 83.45%;
+}
+.btn-lg-primary{
+    position: absolute;
+left: 37.42%;
+right: 37.28%;
+top: 73.33%;
+bottom: 20.41%;
+}
+.dangky-btn{
+    
+position: absolute;
+height: 22px;
+left: 19px;
+right: 20px;
+top: calc(50% - 22px/2 - 1px);
+
+/* text */
+
+font-family: Work Sans;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 140.76%;
+/* identical to box height, or 21px */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: -0.01em;
+
+/* White */
+
+color: #FFFFFF;
+}
+.dangky-header{
+    position: absolute;
+    left: 0.27%;
+    right: 1.36%;
+    top: 0.24%;
+    bottom: 90.65%;
+    
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 38px;
+    /* identical to box height */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.02em;
+    
+    /* Black */
+    
+    color: #12263F;
+}
+header{
+    position: absolute;
+left: 0.27%;
+right: 1.36%;
+top: 0.24%;
+bottom: 83.45%;
+}
+.gianhap{
+    position: absolute;
+    left: 0.27%;
+    right: 1.36%;
+    top: 11.27%;
+    bottom: 83.45%;
+    
+    /* text */
+    
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 140.76%;
+    /* identical to box height, or 21px */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.01em;
+    
+    /* Gray-700 */
+    
+    color: #6E84A3;
+}
+.inputwithlabeltennhanhieu{position: absolute;
+    left: 0.27%;
+    right: 1.36%;
+    top: 26.14%;
+    bottom: 56.59%;
+    }
+.inputwithlabelemail {position: absolute;
+    left: 0.27%;
+    right: 1.36%;
+    top: 48.2%;
+    bottom: 34.53%;
+    
+        }
+
+ .inputpassword {position: absolute;
+    left: 0.27%;
+    right: 1.36%;
+    top: 70.26%;
+    bottom: 12.47%;
+    
+        }       
+.tennhanhieu{
+    position: absolute;
+    width: 102px;
+    height: 22px;
+    left: 0px;
+    top: -2px;
+    
+    /* text */
+    
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 140.76%;
+    /* identical to box height, or 21px */
+    
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+    
+    /* Black */
+    
+    color: #12263F;
+    }
+    .email{position: absolute;
+        width: 41px;
+        height: 22px;
+        left: 0px;
+        top: -2px;
+        
+        /* text */
+        
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 140.76%;
+        /* identical to box height, or 21px */
+        
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.01em;
+        
+        /* Black */
+        
+        color: #12263F;}
+    .nhanhieuinput{position: absolute;
+        height: 40px;
+        left: 0px;
+        right: 0px;
+        top: 28px;
+        }
+    .input{
+        position: absolute;
+        left: 0%;
+        right: 0%;
+        top: 0%;
+        bottom: 0%;
+
+    }
+   
+.reactangle-input{position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    
+    /* White */
+    
+    background: #FFFFFF;
+    border: 1px solid #E3EBF6;
+    box-sizing: border-box;
+    border-radius: 6px;}
+    ::placeholder{
+        position: absolute;
+        height: 17px;
+        left: 14px;
+        right: 15px;
+        top: calc(50% - 17px/2 - 0.5px);
+        
+        /* text */
+        
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 140.76%;
+        /* or 21px */
+        
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.01em;
+        
+        /* Gray-600 */
+        
+        color: #95AAC9;
+    }
+    .eye{
+        position: absolute;
+left: 90.49%;
+right: 5.3%;
+top: 80.58%;
+bottom: 16.55%;
+    }
+.matkhau{
+    position: absolute;
+width: 68px;
+height: 22px;
+left: 0px;
+top: -2px;
+
+/* text */
+
+font-family: Work Sans;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 140.76%;
+/* identical to box height, or 21px */
+
+display: flex;
+align-items: center;
+letter-spacing: -0.01em;
+
+/* Black */
+
+color: #12263F;
+}
+.signin-basic{
+    
+position: relative;
+width: 1435px;
+height: 926px;
+
+background: #FFFFFF;
+}
+.header-signin{
+    position: absolute;
+left: 0.27%;
+right: 1.36%;
+top: 0.24%;
+bottom: 83.45%;
+}
+.signin{
+    position: absolute;
+width: 363px;
+height: 417px;
+left: 536px;
+top: 235px;
+}
+.inputwithlabelemailsignin{
+    position: absolute;
+left: 0.27%;
+right: 1.36%;
+top: 27.58%;
+bottom: 55.16%;
+}
+.email-signin{
+    position: absolute;
+width: 41px;
+height: 22px;
+left: 0px;
+top: -2px;
+
+/* text */
+
+font-family: Work Sans;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 140.76%;
+/* identical to box height, or 21px */
+
+display: flex;
+align-items: center;
+letter-spacing: -0.01em;
+
+/* Black */
+
+color: #12263F;
+}
+.emailsignin-input{
+    position: absolute;
+height: 40px;
+left: 0px;
+right: 0px;
+top: 28px;
+}
+.inputwithpasswordsignin{
+    position: absolute;
+    left: 0.27%;
+    right: 1.36%;
+    top: 49.64%;
+    bottom: 33.09%;
+    
+}
+.password-signin{
+    position: absolute;
+width: 68px;
+height: 22px;
+left: 0px;
+top: -2px;
+
+/* text */
+
+font-family: Work Sans;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 140.76%;
+/* identical to box height, or 21px */
+
+display: flex;
+align-items: center;
+letter-spacing: -0.01em;
+
+/* Black */
+
+color: #12263F;
+}
+.forgot-basic{
+    position: relative;
+    width: 1435px;
+    height: 926px;
+    
+    background: #FFFFFF;
+}
+.forgot-password{
+    position: absolute;
+    width: 365px;
+    height: 325px;
+    left: 535px;
+    top: 250px;
+}
+.forgot-header{
+    position: absolute;
+left: 0.27%;
+right: 0.27%;
+top: 0.31%;
+bottom: 70.46%;
+}
+.thaydoimatkhau{
+    position: absolute;
+    left: 0.27%;
+    right: 0.27%;
+    top: 0.31%;
+    bottom: 88%;
+    
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 38px;
+    /* identical to box height */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.02em;
+    
+    /* Black */
+    
+    color: #12263F;
+}
+.nhapemail{
+    position: absolute;
+    left: 0.27%;
+    right: 0.27%;
+    top: 16.31%;
+    bottom: 70.46%;
+    
+    /* text */
+    
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 140.76%;
+    /* or 21px */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.01em;
+    
+    /* Gray-700 */
+    
+    color: #6E84A3;
+}
+.inputwithlabelemailforgot{
+    position: absolute;
+left: 0.27%;
+right: 0.27%;
+top: 35.38%;
+bottom: 42.46%;
+}
+.email-forgot{position: absolute;
+    width: 41px;
+    height: 22px;
+    left: 0px;
+    top: -2px;
+    
+    /* text */
+    
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 140.76%;
+    /* identical to box height, or 21px */
+    
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+    
+    /* Black */
+    
+    color: #12263F;}
+    .emailforgot-input{
+        position: absolute;
+height: 40px;
+left: 0px;
+right: 0px;
+top: 28px;
+    }
+.btn-lg-primary-forgot{
+    position: absolute;
+    left: 0.27%;
+    right: 0.27%;
+    top: 68.31%;
+    bottom: 13.85%;
+}
+.team-card-grid{
+    position: absolute;
+width: 349px;
+height: 362px;
+left: 482px;
+top: 129px;
+
+}
