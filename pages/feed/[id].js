@@ -59,18 +59,6 @@ function LayoutFeedByStation ({stationPost}) {
         console.log('router 1: ',router)
         console.log('router id 1: ',router.query.id)
 
-        // when docID was assigned successful retrieve data from Contenful
-        // if(sID === router.query.id) {
-        //     console.log("______ welcome: ", sID)
-        //     retrieveData({
-        //         filterByFormula: `Station = "${sID}"`,
-        //     },"StationPost")
-        //     .then(res => {
-        //         console.log("post station:", res)
-        //         setStationPost(res)
-        //     })
-        // }             
-
     },[sID])
 
     return (
@@ -97,23 +85,17 @@ function LayoutFeedByStation ({stationPost}) {
     )
 }
 
-LayoutFeedByStation.getInitialProps = async (ctx) => {
-    console.log("______ initialprops:",)
+LayoutFeedByStation.getInitialProps = async ({query}) => {
+    console.log("______ initialprops:", query.id)
     // console.log("______ welcome: ", cookies.stationID)
     
     const readRes = await airtable.read({
-        filterByFormula: `Station = "recKcGBTwDEvjGjj4"`,
+        filterByFormula: `Station = "${query.id}"`,
         sort: [ {field: 'posCreatedAt', direction: 'desc'},]
     },{tableName:"StationPost"});
     return { stationPost: readRes }
     
 
 }
-
-// Page.getInitialProps = async (ctx) => {
-//     const res = await fetch('https://api.github.com/repos/vercel/next.js')
-//     const json = await res.json()
-//     return { stars: json.stargazers_count }
-//   }
 
 export default LayoutFeedByStation
