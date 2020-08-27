@@ -43,6 +43,7 @@ function LayoutFeedByStation ({stationPost}) {
     const router = useRouter();
     const cookies = parseCookies();
     const [sID, setStationID] = useState(null);
+    const [brandFeedID, setBrandFeedID] = useState(null);
 
     useEffect(() => {        
         // if not user --> redirect to Sign In page
@@ -59,6 +60,16 @@ function LayoutFeedByStation ({stationPost}) {
         console.log('router 1: ',router)
         console.log('router id 1: ',router.query.id)
 
+        if (router.query.id === sID) {
+            retrieveData({
+                filterByFormula:`brandBusinessID="${sID}"`
+            },"Brand")
+            .then(res => {
+                if (res.length > 0) setBrandFeedID(res[0].id)
+            })
+            
+        }
+
     },[sID])
 
     return (
@@ -69,7 +80,7 @@ function LayoutFeedByStation ({stationPost}) {
                     <div className="row mt-4 mt-md-5 justify-content-center">
                         <div className="col-12 col-lg-10 col-xl-8">
                             <PostInput>
-                                <span className="hide" data={sID}></span>
+                                <span className="hide" data={sID} brandFeedID={brandFeedID}></span>
                             </PostInput>
                             
                             {stationPost && stationPost.map((item, index) => (

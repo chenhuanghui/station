@@ -55,9 +55,11 @@ export default class PostInput extends React.Component {
         super(props);
 
         this.state = {
+            brandFeedID : null,
         }
     }
     componentDidMount() {
+        let currentComponent = this
         $(document).on('click','.btn-action-post', function(){
             $(this).append(`<div class="spinner-grow spinner-grow-sm" role="status"><span class="sr-only">Loading...</span></div>`)
             
@@ -72,33 +74,38 @@ export default class PostInput extends React.Component {
                 console.log("imageURL: ", imageURL)
             }
             
-            
-            console.log("brandBusinessID:__", cookies.brandID)
-            retrieveData({
-                filterByFormula:`brandBusinessID="${cookies.brandID}"`
-            },"Brand")
+            createPost(currentComponent.state.brandFeedID, $("#post-content").val(), imageURL)
             .then(res => {
-                console.log("res:___", res[0])
-                createPost(res[0].id, $("#post-content").val(), imageURL)
-                .then(res => {
-                    console.log(res)
-                    $(".spinner-grow").remove()
-                    location.reload()
-                })
+                console.log(res)
+                $(".spinner-grow").remove()
+                location.reload()
             })
 
         })
     }
 
     componentDidUpdate(prevProps, prevState) {
-                
+        let curFeedID = this.props.children.props.brandFeedID
+        let prevFeedID = prevState.brandFeedID
+        
+        console.log("curFeedID:___", curFeedID)
+        console.log("prevFeedID:___", prevFeedID)
+        if (curFeedID !== prevFeedID) {
+            let currentComponent = this
+            console.log("____ DIFFERENCE______")
+            console.log("curFeedID sadfasdfasfasd:___", curFeedID)
+            currentComponent.setState({brandFeedID:curFeedID})
+        }
     }
 
     render() {        
+        const brandFeedID = this.props.children.props.brandFeedID
+        console.log("asf:___", brandFeedID)
+
         return (
             <>
             {this.props.children}
-
+            {this.props.children.props.brandFeedID}
             <div className="card">
                 <div className="card-body">
                     <form>
