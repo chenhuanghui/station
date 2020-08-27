@@ -36,7 +36,7 @@ async function createCommentDatabase(userID, postid, content, imagesURL) {
         },{tableName:"PostComment"});
         console.log("PostComment: ", createPostComment)
 
-        return 1
+        return createComment
     }
     catch(e) {
         console.error(e);
@@ -61,23 +61,14 @@ function CreateCommentRequest(postID) {
     }
 
     console.log(postID, "-",comment,"-",imageURL )
-
-    retrieveData({
-        filterByFormula:`userBusinessID="${cookies.userID}"`
-    },"Account")
+    createCommentDatabase(cookies.userID, postID, comment, imageURL)
     .then(res => {
-        if (res.length > 0 ) {
-            createCommentDatabase(res[0].id, postID, comment, imageURL)
-            .then(res => {
-                console.log("res :", res)
-                if (res === 1) {
-                    $(`#${postID}`).find(".comment").val('')
-                    $(`#${postID}`).find(`.file-upload-show`).html('')
-                    $(`.spinner-grow`).remove()
-                }
-            })
+        console.log("res :", res)
+        if (res === 1) {
+            $(`#${postID}`).find(".comment").val('')
+            $(`#${postID}`).find(`.file-upload-show`).html('')
+            $(`.spinner-grow`).remove()
         }
-        
     })
 }
 
