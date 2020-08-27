@@ -115,7 +115,7 @@ export default class NavBar extends React.Component {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link href="/feed/recKcGBTwDEvjGjj4">
-                  <a className="nav-link active"><i className="fe fe-home"></i> Ticket</a>
+                  <a className="nav-link active"><i className="fe fe-home"></i> Feed</a>
                 </Link>
               </li>
             </ul>
