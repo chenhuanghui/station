@@ -144,12 +144,14 @@ export default class PostShow extends React.Component {
                         </div>
 
                         <hr/>
+                        <div id={`comment-block-${curPID}`}>
+                            {comments && comments.map((item, index) => (
+                                <CommentShow photo={item.fields.commentAttachments} author={item.fields.commentByName} avatar={item.fields.commentByAvatar} comment={item.fields.commentDesc} time={item.fields.createdAt} key={index}>
+                                    <span className="hide"></span>
+                                </CommentShow>
+                            ))}
+                        </div>
                         
-                        {comments && comments.map((item, index) => (
-                            <CommentShow photo={item.fields.commentAttachments} author={item.fields.commentByName} avatar={item.fields.commentByAvatar} comment={item.fields.commentDesc} time={item.fields.createdAt} key={index}>
-                                <span className="hide"></span>
-                            </CommentShow>
-                        ))}
                         
                         
                         <hr/>

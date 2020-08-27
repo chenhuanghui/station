@@ -118,7 +118,7 @@ function NavBar () {
             <div className="dropdown">
               <a href="#" id="sidebarIcon" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="avatar avatar-sm avatar-online">
-                  <img src={avatar} className="avatar-img rounded-circle" alt="..."/>
+                  <img src={cookies.avatar} className="avatar-img rounded-circle" alt="..."/>
                 </div>
               </a>
 
@@ -155,7 +155,7 @@ function NavBar () {
               <div className="dropup">
                 <a href="#" id="sidebarIconCopy" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div className="avatar avatar-sm avatar-online">
-                      <img src={avatar} className="avatar-img rounded-circle" alt="..."/>
+                      <img src={cookies.avatar} className="avatar-img rounded-circle" alt="..."/>
                     </div>
                 </a>
                 {/* Menu */}
