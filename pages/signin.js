@@ -55,6 +55,7 @@ export default class Signin extends React.Component {
                         
                         setCookie(null, 'isLoggedIn', true, {maxAge: 30 * 24 * 60 * 60,path: '/',})
                         setCookie(null, 'userID',result[0].fields.ID , {maxAge: 30 * 24 * 60 * 60,path: '/',})
+                        setCookie(null, 'avatar',result[0].fields.avatar ? result[0].fields.avatar[0].url : "../assets/img/avatars/profiles/avatar-1.jpg" , {maxAge: 30 * 24 * 60 * 60,path: '/',})
                         setCookie(null,'stationID', result[0].fields.Station[0], {maxAge: 30 * 24 * 60 * 60,path:'/'})
                         setCookie(null,'role', result[0].fields.roleValue, {maxAge: 30 * 24 * 60 * 60,path:'/'})
 

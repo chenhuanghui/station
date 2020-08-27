@@ -12,11 +12,19 @@ const cookies = parseCookies();
 const ReactFilestack = loadable(() => import('filestack-react'), { ssr: false });
 
 // FUNCTIONS GLOBAL
+async function retrieveData(formular,tbName) {
+    try {
+      const readRes = await airtable.read(formular,{tableName:tbName});
+      return readRes
+    } catch(e) {
+      console.error(e);
+    }
+}
 
-async function createCommentDatabase(postid, content, imagesURL) {
+async function createCommentDatabase(userID, postid, content, imagesURL) {
     try {
         const createComment = await airtable.create({
-            Account: [`${cookies.userID}`],
+            Account: [`${userID}`],
             comment: content,
             attachments: [{url:imagesURL}]
         },{tableName:"Comment"});
@@ -51,14 +59,25 @@ function CreateCommentRequest(postID) {
         imageURL = $(`#${postID}`).find('.file-upload-show').attr("data")
         console.log("imageURL: ", imageURL)
     }
-    createCommentDatabase(postID, comment, imageURL)
+
+    console.log(postID, "-",comment,"-",imageURL )
+
+    retrieveData({
+        filterByFormula:`userBusinessID="${cookies.userID}"`
+    },"Account")
     .then(res => {
-        console.log("res :", res)
-        if (res === 1) {
-            $(`#${postID}`).find(".comment").val('')
-            $(`#${postID}`).find(`.file-upload-show`).html('')
-            $(`.spinner-grow`).remove()
+        if (res.length > 0 ) {
+            createCommentDatabase(res[0].id, postID, comment, imageURL)
+            .then(res => {
+                console.log("res :", res)
+                if (res === 1) {
+                    $(`#${postID}`).find(".comment").val('')
+                    $(`#${postID}`).find(`.file-upload-show`).html('')
+                    $(`.spinner-grow`).remove()
+                }
+            })
         }
+        
     })
 }
 
@@ -68,14 +87,15 @@ export default class CommentShow extends React.Component {
         super(props);
 
         this.state = {
+            avatar : null
         }
     }
     componentDidMount() {
+        let currentComponent = this
         console.log("_______ comment post id:",this.props.children.props.post)
-
-        // $(document).on('click','.btn-action-comment', function(){
-            
-        // })
+        console.log("avatar: ", cookies.avatar)
+        currentComponent.setState({avatar: cookies.avatar})
+        
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -84,13 +104,14 @@ export default class CommentShow extends React.Component {
 
     render() {        
         const curPID = this.props.children.props.post
+        const {avatar} = this.state
         return (
             <div id={curPID}>
                 {this.props.children}       
                 <div className="row">
                     <div className="col-auto">
                         <div className="avatar avatar-sm">
-                            <img src="/assets/img/avatars/profiles/avatar-1.jpg" alt="..." className="avatar-img rounded-circle"/>
+                            <img src={avatar} alt="..." className="avatar-img rounded-circle"/>
                         </div>
                     </div>
                     <div className="col ml-n2">

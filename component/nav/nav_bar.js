@@ -1,7 +1,8 @@
 import $ from 'jquery'
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link'
 import Router from 'next/router';
+import { useRouter } from 'next/router'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 const AirtablePlus = require('airtable-plus');  
@@ -19,61 +20,69 @@ async function retrieveData(formular,tbName) {
   }
 }
 
-export default class NavBar extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      data: [],
-      brand:[]
+function NavBar () {
+  const router = useRouter();
+  const cookies = parseCookies();
+  const [data, setData] = useState(null);
+  const [brand, setBrand] = useState(null);
+  const [sID, setSID] = useState(null);
+
+  useEffect(() => {
+    if(!cookies.userID || !cookies.isLoggedIn || !cookies.brandID) {
+      destroyCookie(userID)
+      destroyCookie(isLoggedIn)
+      destroyCookie(role)
+      Router.push('/signin')
     }
-  }
 
-  componentDidMount() {
-    let currentComponent = this;
-    const cookies = parseCookies()
-    
-    if(cookies.userID && cookies.isLoggedIn) {
+    setSID(router.query.id)
+    console.log('router 1: ',router)
 
+    if (router.query.id === sID) {
+      retrieveData({filterByFormula:`ID="${cookies.userID}"`},'Account')
+      .then (result => {
+        if (result.length > 0) setData(result[0].fields)
+      })
+      
+      retrieveData({filterByFormula:`ID="${sID}"`},'Brand')
+      .then(res => {
+        if (res.length > 0) setBrand(res[0].fields)
+      })                
+      
+      // ==========================================
+      // javascript action
+      // ==========================================
+
+      //toggle main menu xs
+      $('.navbar-toggler').click(function(){
+        if (!$('.navbar-collapse').hasClass('show')) {
+          $('.navbar-collapse').addClass('show')
+        } else {
+          $('.navbar-collapse').removeClass('show')
+        }
+      })
+      //toggle account menu xs
+      $('.navbar-user').click(function(){
+        if (!$('.dropdown').hasClass('show')) {
+          $('.dropdown').addClass('show')
+          $('.dropdown-menu-right').addClass('show')
+        } else {
+          $('.dropdown').removeClass('show')
+          $('.dropdown-menu-right').removeClass('show')
+        }
+      })
+      
+      // logout
+      $('.logout').click(function(){
+        destroyCookie(null, 'isLoggedIn', {path:'/'})
+        destroyCookie(null, 'userID', {path:'/'})
+        destroyCookie(null, 'brandID', {path:'/'})
+        Router.push(`/signin`)
+      })
     }
-    
-    // ==========================================
-    // javascript action
-    // ==========================================
-
-    //toggle main menu xs
-    $('.navbar-toggler').click(function(){
-      if (!$('.navbar-collapse').hasClass('show')) {
-        $('.navbar-collapse').addClass('show')
-      } else {
-        $('.navbar-collapse').removeClass('show')
-      }
-    })
-    //toggle account menu xs
-    $('.navbar-user').click(function(){
-      if (!$('.dropdown').hasClass('show')) {
-        $('.dropdown').addClass('show')
-        $('.dropdown-menu-right').addClass('show')
-      } else {
-        $('.dropdown').removeClass('show')
-        $('.dropdown-menu-right').removeClass('show')
-      }
-    })
-    
-    // logout
-    $('.logout').click(function(){
-      destroyCookie(null, 'isLoggedIn', {path:'/'})
-      destroyCookie(null, 'userID', {path:'/'})
-      destroyCookie(null, 'stationID', {path:'/'})
-      destroyCookie(null, 'role', {path:'/'})
-      Router.push(`/signin`)
-    })
-
-
-  }
-
-  render () {
-    const {data, brand} = this.state;
-    return (
+  },[sID])
+  return(
+    <>
       <nav className="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
         <div className="container-fluid">
           {/* toggle button */}
@@ -94,16 +103,11 @@ export default class NavBar extends React.Component {
             <div className="dropdown">
               <a href="#" id="sidebarIcon" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="avatar avatar-sm avatar-online">
-                  {data && data.avatar && data.avatar.length > 0
-                  ? <img src={data.avatar[0].url} className="avatar-img rounded-circle" alt="..."/>
-                  : <img src="../assets/img/avatars/profiles/avatar-1.jpg" className="avatar-img rounded-circle" alt="..."/>
-                  }
+                  <img src={cookies.avatar} className="avatar-img rounded-circle" alt="..."/>
                 </div>
               </a>
-              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="sidebarIcon"> 
-                  <Link href="/#">
-                    <a className="dropdown-item">Tài khoản</a>
-                  </Link>                               
+
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="sidebarIcon">                 
                 <hr className="dropdown-divider" />
                 <span className="dropdown-item logout">Logout</span>
               </div>
@@ -114,13 +118,16 @@ export default class NavBar extends React.Component {
             {/* menu group block */}
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link href="/feed/recKcGBTwDEvjGjj4">
-                  <a className="nav-link active"><i className="fe fe-home"></i> Feed</a>
+                <Link href="/feed/[id]" as = {`/feed/${sID}`}>
+                  <a className="nav-link active"><i className="fe fe-wind"></i> New Feed</a>
+                </Link>
+                <Link href="#">
+                  <a className="nav-link"><i className="fe fe-home"></i> Ticket</a>
                 </Link>
               </li>
             </ul>
 
-            {/* Push content down */}
+            <hr className="navbar-divider my-3" />
             <div className="mt-auto"></div>
 
             <div className="navbar-user d-none d-md-flex" id="sidebarUser">
@@ -133,20 +140,12 @@ export default class NavBar extends React.Component {
               <div className="dropup">
                 <a href="#" id="sidebarIconCopy" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div className="avatar avatar-sm avatar-online">
-                      {data && data.avatar
-                      ? <img src={data.avatar[0].url} className="avatar-img rounded-circle" alt="..."/>
-                      : <img src="../assets/img/avatars/profiles/avatar-1.jpg" className="avatar-img rounded-circle" alt="..."/>
-                      }
+                      <img src={cookies.avatar} className="avatar-img rounded-circle" alt="..."/>
                     </div>
                 </a>
-
                 {/* Menu */}
                 <div className="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                  <Link href="/#" >
-                    <a className="dropdown-item">Tài khoản</a>
-                  </Link>
-                  
-                  <hr className="dropdown-divider" />
+                  <hr className="dropdown-divider" />                  
                   <span className="dropdown-item logout">Logout</span>
                 </div>
             </div>
@@ -174,6 +173,8 @@ export default class NavBar extends React.Component {
 
     `}</style>
       </nav>
-      )
-    }
+    </>
+  )
 }
+
+export default NavBar
