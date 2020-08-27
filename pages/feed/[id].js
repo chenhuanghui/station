@@ -90,9 +90,9 @@ LayoutFeedByStation.getInitialProps = async ({query}) => {
     // console.log("______ welcome: ", cookies.stationID)
     
     const readRes = await airtable.read({
-        filterByFormula: `Station = "${query.id}"`,
+        filterByFormula: `Brand = "${query.id}"`,
         sort: [ {field: 'posCreatedAt', direction: 'desc'},]
-    },{tableName:"StationPost"});
+    },{tableName:"BrandPost"});
     return { stationPost: readRes }
     
 
