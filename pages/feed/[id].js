@@ -64,7 +64,7 @@ function LayoutFeedByStation ({stationPost}) {
 
     return (
         <>
-            {/* <NavBar /> */}
+            <NavBar />
             <div className="main-content">
                 <div className="container-fluid">
                     <div className="row mt-4 mt-md-5 justify-content-center">
