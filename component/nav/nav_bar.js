@@ -26,12 +26,11 @@ function NavBar () {
   const [data, setData] = useState(null);
   const [brand, setBrand] = useState(null);
   const [sID, setSID] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
-    if(!cookies.userID || !cookies.isLoggedIn || !cookies.brandID) {
-      destroyCookie(userID)
+    if(!cookies.isLoggedIn) {
       destroyCookie(isLoggedIn)
-      destroyCookie(role)
       Router.push('/signin')
     }
 
@@ -39,9 +38,16 @@ function NavBar () {
     console.log('router 1: ',router)
 
     if (router.query.id === sID) {
-      retrieveData({filterByFormula:`ID="${cookies.userID}"`},'Account')
+      console.log('router 2___: ',sID)
+      retrieveData({
+        filterByFormula:`userBusinessID="${cookies.userID}"`
+      },'Account')      
       .then (result => {
-        if (result.length > 0) setData(result[0].fields)
+        console.log("account nav_bar:", result)
+        if (result.length > 0) {
+          setData(result[0].fields)
+          result[0].fields.avatar ? setAvatar(result[0].fields.avatar[0].url) : setAvatar("/assets/img/avatars/profiles/avatar-1.jpg")
+        }
       })
       
       retrieveData({filterByFormula:`ID="${sID}"`},'Brand')
@@ -81,6 +87,7 @@ function NavBar () {
       })
     }
   },[sID])
+
   return(
     <>
       <nav className="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
@@ -103,7 +110,7 @@ function NavBar () {
             <div className="dropdown">
               <a href="#" id="sidebarIcon" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="avatar avatar-sm avatar-online">
-                  <img src={cookies.avatar} className="avatar-img rounded-circle" alt="..."/>
+                  <img src={avatar} className="avatar-img rounded-circle" alt="..."/>
                 </div>
               </a>
 
@@ -140,7 +147,7 @@ function NavBar () {
               <div className="dropup">
                 <a href="#" id="sidebarIconCopy" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div className="avatar avatar-sm avatar-online">
-                      <img src={cookies.avatar} className="avatar-img rounded-circle" alt="..."/>
+                      <img src={avatar} className="avatar-img rounded-circle" alt="..."/>
                     </div>
                 </a>
                 {/* Menu */}

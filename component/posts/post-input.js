@@ -21,7 +21,7 @@ async function retrieveData(formular,tbName) {
     }
 }
 
-async function createPost(brandid, content, imagesURL) {
+async function createPost(brandFeedID, content, imagesURL) {
     try {
         const createPost = await airtable.create({
             content: content,
@@ -31,14 +31,14 @@ async function createPost(brandid, content, imagesURL) {
         },{tableName:"Post"});
         console.log('create result:', createPost)
         
-        const createStationPost = await airtable.create({
-            Brand: [`${brandid}`],
+        const createBrandPost = await airtable.create({
+            Brand: [`${brandFeedID}`],
             Post: [`${createPost.id}`]            
         },{tableName:"BrandPost"});
-        console.log("BrandPost: ", createStationPost)
+        console.log("createBrandPost: ", createBrandPost)
 
         const createPostAccount = await airtable.create({
-            Account: [`${cookies.userID}`],
+            Account: [`${cookies.userFeedID}`],
             Post: [`${createPost.id}`]            
         },{tableName:"PostAccount"});
         console.log("PostAccount: ", createPostAccount)
@@ -50,16 +50,58 @@ async function createPost(brandid, content, imagesURL) {
     }
 }
 
+async function createPostByBusinessID(userBusID, brandBusID, content, imagesURL) {
+    try {
+        const brandFeed = await airtable.read({
+            filterByFormula:`brandBusinessID="${brandBusID}"`,
+            maxRecords: 1
+        },{tableName:"Brand"});
+        console.log("brandFeed: ",brandFeed)
+
+        const userFeed = await airtable.read({
+            filterByFormula:`userBusinessID="${userBusID}"`,
+            maxRecords: 1
+        },{tableName:"Account"});
+        console.log("userFeed: ",userFeed)
+        
+        const createPost = await airtable.create({
+            content: content,
+            photos: [{url:imagesURL}],
+            like: 0,
+            dislike:0
+        },{tableName:"Post"});
+        console.log('create result:', createPost)
+        
+        const createBrandPost = await airtable.create({
+            Brand: [`${brandFeed[0].id}`],
+            Post: [`${createPost.id}`]            
+        },{tableName:"BrandPost"});
+        console.log("createBrandPost: ", createBrandPost)
+
+        const createPostAccount = await airtable.create({
+            Account: [`${userFeed[0].id}`],
+            Post: [`${createPost.id}`]            
+        },{tableName:"PostAccount"});
+        console.log("PostAccount: ", createPostAccount)
+
+        return createPostAccount;
+    }
+    catch(e) {
+        console.error(e);
+    }
+}
+
+
+
+
 export default class PostInput extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            brandFeedID : null,
         }
     }
     componentDidMount() {
-        let currentComponent = this
         $(document).on('click','.btn-action-post', function(){
             $(this).append(`<div class="spinner-grow spinner-grow-sm" role="status"><span class="sr-only">Loading...</span></div>`)
             
@@ -73,38 +115,27 @@ export default class PostInput extends React.Component {
                 imageURL = $('.file-upload-show').attr("data")
                 console.log("imageURL: ", imageURL)
             }
-            
-            createPost(currentComponent.state.brandFeedID, $("#post-content").val(), imageURL)
+
+            createPostByBusinessID(cookies.userID, cookies.brandID, $("#post-content").val(), imageURL) 
             .then(res => {
                 console.log(res)
                 $(".spinner-grow").remove()
                 location.reload()
             })
 
+            
         })
     }
 
     componentDidUpdate(prevProps, prevState) {
-        let curFeedID = this.props.children.props.brandFeedID
-        let prevFeedID = prevState.brandFeedID
-        
-        console.log("curFeedID:___", curFeedID)
-        console.log("prevFeedID:___", prevFeedID)
-        if (curFeedID !== prevFeedID) {
-            let currentComponent = this
-            console.log("____ DIFFERENCE______")
-            console.log("curFeedID sadfasdfasfasd:___", curFeedID)
-            currentComponent.setState({brandFeedID:curFeedID})
-        }
+                
     }
 
     render() {        
-        const brandFeedID = this.props.children.props.brandFeedID
-        console.log("asf:___", brandFeedID)
-
         return (
             <>
             {this.props.children}
+
             <div className="card">
                 <div className="card-body">
                     <form>

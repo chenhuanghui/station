@@ -47,11 +47,8 @@ function LayoutFeedByStation ({stationPost}) {
 
     useEffect(() => {        
         // if not user --> redirect to Sign In page
-        if(!cookies.userID | !cookies.isLoggedIn | !cookies.stationID | !cookies.role) {
-            destroyCookie(userID)
+        if(!cookies.isLoggedIn) {
             destroyCookie(isLoggedIn)
-            destroyCookie(stationID)
-            destroyCookie(role)
             Router.push('/signin')
         }
         
@@ -61,6 +58,7 @@ function LayoutFeedByStation ({stationPost}) {
         console.log('router id 1: ',router.query.id)
 
         if (router.query.id === sID) {
+            setCookie(null,'brandID', sID, {maxAge: 30 * 24 * 60 * 60,path:'/'})
             retrieveData({
                 filterByFormula:`brandBusinessID="${sID}"`
             },"Brand")
@@ -83,9 +81,12 @@ function LayoutFeedByStation ({stationPost}) {
                             </PostInput>
                             
                             {stationPost && stationPost.map((item, index) => (
-                                <PostShow key={index}>
-                                    <span className="hide" postID={item.fields.Post[0]}></span>
-                                </PostShow>
+                                item.fields.Post
+                                ? 
+                                    <PostShow key={index}>
+                                        <span className="hide" postID={item.fields.Post[0]}></span>
+                                    </PostShow>
+                                : null
                             ))}
                         </div>
                     </div>
@@ -100,9 +101,10 @@ LayoutFeedByStation.getInitialProps = async ({query}) => {
     // console.log("______ welcome: ", cookies.stationID)
     
     const readRes = await airtable.read({
-        filterByFormula: `Brand = "${query.id}"`,
+        filterByFormula: `brandBusinessID = "${query.id}"`,
         sort: [ {field: 'posCreatedAt', direction: 'desc'},]
     },{tableName:"BrandPost"});
+    console.log("BrandPost", readRes)
     return { stationPost: readRes }
     
 
