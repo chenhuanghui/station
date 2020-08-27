@@ -12,8 +12,16 @@ const cookies = parseCookies();
 const ReactFilestack = loadable(() => import('filestack-react'), { ssr: false });
 
 // FUNCTIONS GLOBAL
+async function retrieveData(formular,tbName) {
+    try {
+      const readRes = await airtable.read(formular,{tableName:tbName});
+      return readRes
+    } catch(e) {
+      console.error(e);
+    }
+}
 
-async function createPost(content, imagesURL) {
+async function createPost(brandid, content, imagesURL) {
     try {
         const createPost = await airtable.create({
             content: content,
@@ -24,10 +32,10 @@ async function createPost(content, imagesURL) {
         console.log('create result:', createPost)
         
         const createStationPost = await airtable.create({
-            Station: [`${cookies.stationID}`],
+            Brand: [`${brandid}`],
             Post: [`${createPost.id}`]            
-        },{tableName:"StationPost"});
-        console.log("StationPost: ", createStationPost)
+        },{tableName:"BrandPost"});
+        console.log("BrandPost: ", createStationPost)
 
         const createPostAccount = await airtable.create({
             Account: [`${cookies.userID}`],
@@ -63,13 +71,21 @@ export default class PostInput extends React.Component {
                 imageURL = $('.file-upload-show').attr("data")
                 console.log("imageURL: ", imageURL)
             }
-            createPost($("#post-content").val(), imageURL)
-            .then(res => {
-                console.log(res)
-                $(".spinner-grow").remove()
-                location.reload()
-            })
             
+            
+            console.log("brandBusinessID:__", cookies.brandID)
+            retrieveData({
+                filterByFormula:`brandBusinessID="${cookies.brandID}"`
+            },"Brand")
+            .then(res => {
+                console.log("res:___", res[0])
+                createPost(res[0].id, $("#post-content").val(), imageURL)
+                .then(res => {
+                    console.log(res)
+                    $(".spinner-grow").remove()
+                    location.reload()
+                })
+            })
 
         })
     }
