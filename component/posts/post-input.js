@@ -105,7 +105,6 @@ export default class PostInput extends React.Component {
         return (
             <>
             {this.props.children}
-            {this.props.children.props.brandFeedID}
             <div className="card">
                 <div className="card-body">
                     <form>

@@ -67,7 +67,6 @@ function LayoutFeedByStation ({stationPost}) {
             .then(res => {
                 if (res.length > 0) setBrandFeedID(res[0].id)
             })
-            
         }
 
     },[sID])
