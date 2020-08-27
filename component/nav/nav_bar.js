@@ -30,7 +30,6 @@ function NavBar () {
 
   useEffect(() => {
     if(!cookies.isLoggedIn) {
-      destroyCookie(isLoggedIn)
       Router.push('/signin')
     }
 
@@ -39,8 +38,14 @@ function NavBar () {
 
     if (router.query.id === sID) {
       console.log('router 2___: ',sID)
+      console.log('cookie router 2___: ',cookies.userID)
+
+      setCookie(null,'brandID', sID, {maxAge: 30 * 24 * 60 * 60,path:'/'})
+
+
       retrieveData({
-        filterByFormula:`userBusinessID="${cookies.userID}"`
+        filterByFormula:`ID="${cookies.userID}"`,
+        maxRecords: 1
       },'Account')      
       .then (result => {
         console.log("account nav_bar:", result)
@@ -50,7 +55,10 @@ function NavBar () {
         }
       })
       
-      retrieveData({filterByFormula:`ID="${sID}"`},'Brand')
+      retrieveData({
+        filterByFormula:`ID="${cookies.brandID}"`,
+        maxRecords: 1
+      },'Brand')
       .then(res => {
         if (res.length > 0) setBrand(res[0].fields)
       })                
@@ -125,7 +133,7 @@ function NavBar () {
             {/* menu group block */}
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link href="/feed/[id]" as = {`/feed/${sID}`}>
+                <Link href="/feed/[id]" as = {`/feed/${cookies.brandID}`}>
                   <a className="nav-link active"><i className="fe fe-wind"></i> New Feed</a>
                 </Link>
                 <Link href="#">

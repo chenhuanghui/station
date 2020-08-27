@@ -42,8 +42,7 @@ async function updateData(rowID, data,tbName) {
 function LayoutFeedByStation ({stationPost}) {
     const router = useRouter();
     const cookies = parseCookies();
-    const [sID, setStationID] = useState(null);
-    const [brandFeedID, setBrandFeedID] = useState(null);
+    const [sID, setSID] = useState(null);
 
     useEffect(() => {        
         // if not user --> redirect to Sign In page
@@ -53,31 +52,25 @@ function LayoutFeedByStation ({stationPost}) {
         }
         
         // ===============================================
-        setStationID(router.query.id)
+        setSID(router.query.id)
         console.log('router 1: ',router)
         console.log('router id 1: ',router.query.id)
 
         if (router.query.id === sID) {
             setCookie(null,'brandID', sID, {maxAge: 30 * 24 * 60 * 60,path:'/'})
-            retrieveData({
-                filterByFormula:`brandBusinessID="${sID}"`
-            },"Brand")
-            .then(res => {
-                if (res.length > 0) setBrandFeedID(res[0].id)
-            })
         }
 
     },[sID])
 
     return (
         <>
-            <NavBar />
+            {/* <NavBar /> */}
             <div className="main-content">
                 <div className="container-fluid">
                     <div className="row mt-4 mt-md-5 justify-content-center">
                         <div className="col-12 col-lg-10 col-xl-8">
                             <PostInput>
-                                <span className="hide" data={sID} brandFeedID={brandFeedID}></span>
+                                <span className="hide" data={sID}></span>
                             </PostInput>
                             
                             {stationPost && stationPost.map((item, index) => (

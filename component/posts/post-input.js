@@ -21,7 +21,7 @@ async function retrieveData(formular,tbName) {
     }
 }
 
-async function createPost(brandFeedID, content, imagesURL) {
+async function createPost(content, imagesURL) {
     try {
         const createPost = await airtable.create({
             content: content,
@@ -32,67 +32,23 @@ async function createPost(brandFeedID, content, imagesURL) {
         console.log('create result:', createPost)
         
         const createBrandPost = await airtable.create({
-            Brand: [`${brandFeedID}`],
+            Brand: [`${cookies.brandID}`],
             Post: [`${createPost.id}`]            
         },{tableName:"BrandPost"});
         console.log("createBrandPost: ", createBrandPost)
 
         const createPostAccount = await airtable.create({
-            Account: [`${cookies.userFeedID}`],
+            Account: [`${cookies.userID}`],
             Post: [`${createPost.id}`]            
         },{tableName:"PostAccount"});
         console.log("PostAccount: ", createPostAccount)
 
-        return createPostAccount;
+        return createPost;
     }
     catch(e) {
         console.error(e);
     }
 }
-
-async function createPostByBusinessID(userBusID, brandBusID, content, imagesURL) {
-    try {
-        const brandFeed = await airtable.read({
-            filterByFormula:`brandBusinessID="${brandBusID}"`,
-            maxRecords: 1
-        },{tableName:"Brand"});
-        console.log("brandFeed: ",brandFeed)
-
-        const userFeed = await airtable.read({
-            filterByFormula:`userBusinessID="${userBusID}"`,
-            maxRecords: 1
-        },{tableName:"Account"});
-        console.log("userFeed: ",userFeed)
-        
-        const createPost = await airtable.create({
-            content: content,
-            photos: [{url:imagesURL}],
-            like: 0,
-            dislike:0
-        },{tableName:"Post"});
-        console.log('create result:', createPost)
-        
-        const createBrandPost = await airtable.create({
-            Brand: [`${brandFeed[0].id}`],
-            Post: [`${createPost.id}`]            
-        },{tableName:"BrandPost"});
-        console.log("createBrandPost: ", createBrandPost)
-
-        const createPostAccount = await airtable.create({
-            Account: [`${userFeed[0].id}`],
-            Post: [`${createPost.id}`]            
-        },{tableName:"PostAccount"});
-        console.log("PostAccount: ", createPostAccount)
-
-        return createPostAccount;
-    }
-    catch(e) {
-        console.error(e);
-    }
-}
-
-
-
 
 export default class PostInput extends React.Component {
     constructor(props) {
@@ -116,7 +72,7 @@ export default class PostInput extends React.Component {
                 console.log("imageURL: ", imageURL)
             }
 
-            createPostByBusinessID(cookies.userID, cookies.brandID, $("#post-content").val(), imageURL) 
+            createPost($("#post-content").val(), imageURL) 
             .then(res => {
                 console.log(res)
                 $(".spinner-grow").remove()
