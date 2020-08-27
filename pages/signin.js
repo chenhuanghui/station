@@ -5,8 +5,8 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 const AirtablePlus = require('airtable-plus');  
 const airtable = new AirtablePlus({
-  baseID: 'appmREe03n1MQ6ydq',
-  apiKey: 'keyLNupG6zOmmokND'
+    baseID: process.env.AIR_TABLE_BASE_ID_STATION,
+    apiKey: process.env.AIR_TABLE_API_KEY_STATION,
 });
 
 async function retrieveData(formular,tbName) {
@@ -54,11 +54,11 @@ export default class Signin extends React.Component {
                         setCookie(null, 'isLoggedIn', true, {maxAge: 30 * 24 * 60 * 60,path: '/',})
                         setCookie(null, 'userID',result[0].fields.ID , {maxAge: 30 * 24 * 60 * 60,path: '/',})
                         setCookie(null, 'avatar',result[0].fields.avatar ? result[0].fields.avatar[0].url : "../assets/img/avatars/profiles/avatar-1.jpg" , {maxAge: 30 * 24 * 60 * 60,path: '/',})
-                        setCookie(null,'brandID', result[0].fields.brandID[0], {maxAge: 30 * 24 * 60 * 60,path:'/'})
+                        setCookie(null,'brandID', result[0].fields.Brand[0], {maxAge: 30 * 24 * 60 * 60,path:'/'})
                         setCookie(null,'role', result[0].fields.roleValue, {maxAge: 30 * 24 * 60 * 60,path:'/'})
 
                         // Router.push(`/overview/${result[0].fields.brandID[0]}`)
-                        Router.push(`/feed/${result[0].fields.brandID[0]}`)
+                        Router.push(`/feed/${result[0].fields.Brand[0]}`)
                     } else {
                         $('#notice').removeClass('hide').addClass('show')   
                         $('.spinner-grow').remove()
