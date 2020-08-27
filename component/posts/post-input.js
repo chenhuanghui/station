@@ -92,7 +92,7 @@ export default class PostInput extends React.Component {
             <>
             {this.props.children}
 
-            <div className="card">
+            <div className="card post-input">
                 <div className="card-body">
                     <form>
                         <div className="form-group">

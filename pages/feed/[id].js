@@ -76,7 +76,7 @@ function LayoutFeedByStation ({stationPost}) {
                             {stationPost && stationPost.map((item, index) => (
                                 item.fields.Post
                                 ? 
-                                    <PostShow key={index}>
+                                    <PostShow className="post-show" key={index}>
                                         <span className="hide" postID={item.fields.Post[0]}></span>
                                     </PostShow>
                                 : null

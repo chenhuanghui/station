@@ -49,7 +49,7 @@ export default class CommentShow extends React.Component {
         return (
             <>
                 {this.props.children}       
-                <div className="comment mb-3">
+                <div className="comment mb-3 comment-show">
                     <div className="row">
                         <div className="col-auto">
                             <a className="avatar avatar-sm" href="#">

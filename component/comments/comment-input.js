@@ -99,7 +99,7 @@ export default class CommentShow extends React.Component {
         return (
             <div id={curPID}>
                 {this.props.children}       
-                <div className="row">
+                <div className="row comment-input">
                     <div className="col-auto">
                         <div className="avatar avatar-sm">
                             <img src={avatar} alt="..." className="avatar-img rounded-circle"/>

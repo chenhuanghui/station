@@ -94,7 +94,7 @@ export default class PostShow extends React.Component {
         return (
             <>
                 {this.props.children}
-                <div className="card">
+                <div className="card post-show">
                     <div className="card-body">
                         <div className="mb-3">
                             <div className="row align-items-center">
