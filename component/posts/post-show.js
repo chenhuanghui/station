@@ -123,8 +123,11 @@ export default class PostShow extends React.Component {
 
                         <p className="text-center mb-3">
                             { postContent && postContent.fields.photos
-                            ? 
-                            <img src={postContent.fields.photos[0].url} alt="..." className="img-fluid rounded"/>
+                            ?   postContent.fields.photos[0].type === "video/quicktime"
+                                ? <video id={`video-control-${postContent.fields.ID}`} width="640" height="360" preload controls className="img-fluid rounded">
+                                    <source src={postContent.fields.photos[0].url} />
+                                  </video>
+                                : <img src={postContent.fields.photos[0].url} alt="..." className="img-fluid rounded"/>                            
                             : null
                             }
                         </p>
