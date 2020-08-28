@@ -50,11 +50,27 @@ async function createPost(content, imagesURL) {
     }
 }
 
+async function retrieveBrandByID(recID) {
+    try {
+        const readRes = await airtable.read({
+            filterByFormula:`ID="${recID}"`,
+            maxRecords: 1 
+        },{tableName:"Brand"});
+        
+        console.log("brand getting data:___",readRes);
+        return readRes[0]
+    } catch(e) {
+        console.error(e);
+    }
+}
+
 export default class PostInput extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            brandID: null,
+            postToBrand: null
         }
     }
     componentDidMount() {
@@ -84,10 +100,24 @@ export default class PostInput extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-                
+        let currentComponent = this
+        let curBrandID = this.props.children.props.data;
+        let prevBrandID = currentComponent.state.brandID
+        
+        if (curBrandID !== prevBrandID) {
+            // set state brandID
+            currentComponent.setState({brandID: curBrandID})
+            // get data of this brand from airtable
+            console.log("load post input for: ", curBrandID)
+            retrieveBrandByID(curBrandID)
+            .then(res => {
+                currentComponent.setState({postToBrand: res})
+            })
+        }
     }
 
-    render() {        
+    render() {      
+        const {postToBrand}  = this.state
         return (
             <>
             {this.props.children}
@@ -125,6 +155,13 @@ export default class PostInput extends React.Component {
                             </div>
                         </div>
                     </div>
+                    
+                    <hr class='dropdown-divider'/>
+                    <div className="">
+                        <span className="text-muted small">Đăng lên dòng thời gian của: </span>
+                        <span className="font-weight-bold text-focus">{postToBrand && postToBrand.fields.name}</span>
+                    </div>
+
                     <div className="file-upload-show" data=""></div>
 
                 </div>
