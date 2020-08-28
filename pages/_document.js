@@ -28,7 +28,7 @@ class MyDocument extends Document {
             {/* <script src="../assets/libs/select2/dist/js/select2.full.min.js"></script> */}
 
 
-            <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/7453021.js"></script>
+            {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/7453021.js"></script> */}
             {/* GA-init */}
             {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168839658-1"></script> */}
           
