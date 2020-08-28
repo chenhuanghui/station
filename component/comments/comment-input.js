@@ -63,7 +63,7 @@ function CreateCommentRequest(postID) {
     }
 
     console.log(postID, "-",comment,"-",imageURL )
-    createCommentDatabase(cookies.userID, postID, comment, imageURL)
+    createCommentDatabase(cookies.userID_Station, postID, comment, imageURL)
     .then(res => {
         console.log("res :", res)
         if (res) {

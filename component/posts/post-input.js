@@ -38,7 +38,7 @@ async function createPost(content, imagesURL) {
         console.log("createBrandPost: ", createBrandPost)
 
         const createPostAccount = await airtable.create({
-            Account: [`${cookies.userID}`],
+            Account: [`${cookies.userID_Station}`],
             Post: [`${createPost.id}`]            
         },{tableName:"PostAccount"});
         console.log("PostAccount: ", createPostAccount)

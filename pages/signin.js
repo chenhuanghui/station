@@ -29,11 +29,12 @@ export default class Signin extends React.Component {
     componentDidMount() {    
 
         // reset all cookies
-        destroyCookie(null,'isLoggedIn',{path:'/'})
-        destroyCookie(null,'userID',{path:'/'})
-        destroyCookie(null,'avatar',{path:'/'})
-        destroyCookie(null,'brandID',{path:'/'})
+        destroyCookie(null, 'isLoggedIn', {path:'/'})
+        destroyCookie(null, 'userID_Station', {path:'/'})
+        destroyCookie(null, 'brandID', {path:'/'})
+        destroyCookie(null, 'avatar', {path:'/'})
         destroyCookie(null,'role',{path:'/'})
+
         // ========================
 
         let currentComponent = this;        
@@ -52,7 +53,7 @@ export default class Signin extends React.Component {
                         console.log('.... success');
                         
                         setCookie(null, 'isLoggedIn', true, {maxAge: 30 * 24 * 60 * 60,path: '/',})
-                        setCookie(null, 'userID',result[0].fields.ID , {maxAge: 30 * 24 * 60 * 60,path: '/',})
+                        setCookie(null, 'userID_Station',result[0].fields.ID , {maxAge: 30 * 24 * 60 * 60,path: '/',})
                         setCookie(null, 'avatar',result[0].fields.avatar ? result[0].fields.avatar[0].url : "../assets/img/avatars/profiles/avatar-1.jpg" , {maxAge: 30 * 24 * 60 * 60,path: '/',})
                         setCookie(null,'brandID', result[0].fields.Brand[0], {maxAge: 30 * 24 * 60 * 60,path:'/'})
                         setCookie(null,'role', result[0].fields.roleValue, {maxAge: 30 * 24 * 60 * 60,path:'/'})

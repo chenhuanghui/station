@@ -89,8 +89,9 @@ function NavBar () {
       // logout
       $('.logout').click(function(){
         destroyCookie(null, 'isLoggedIn', {path:'/'})
-        destroyCookie(null, 'userID', {path:'/'})
+        destroyCookie(null, 'userID_Station', {path:'/'})
         destroyCookie(null, 'brandID', {path:'/'})
+        destroyCookie(null, 'avatar', {path:'/'})
         Router.push(`/signin`)
       })
     }
