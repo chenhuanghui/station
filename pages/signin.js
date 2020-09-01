@@ -34,7 +34,7 @@ function btnQueryEffectDone(button) {
 async function getUser(emailLogin, passwordLogin) {
     try {
         const readUser = await airtableUSER.read({
-            filterByFormula: `AND(email = "${emailLogin}", password= "${passwordLogin}")`,
+            filterByFormula: `AND(email = "${emailLogin}", password = "${passwordLogin}", Feed = "1")`,
             maxRecords: 1
         },{tableName:"User"})
         console.log("readUser: ", readUser)
