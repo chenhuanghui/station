@@ -33,16 +33,32 @@ function btnQueryEffectDone(button) {
 
 async function getUser(emailLogin, passwordLogin) {
     try {
-        const readUser = await airtableUSER.read({
+        const user = await airtableUSER.read({
             filterByFormula: `AND(email = "${emailLogin}", password = "${passwordLogin}", Feed = "1")`,
             maxRecords: 1
         },{tableName:"User"})
-        console.log("readUser: ", readUser)
-        return readUser
+        
+        if (user.length > 0) return user[0]
+        else return null
+        
     } catch(e) {
         console.log(e)
     }
 }
+
+async function getFirstBrandOfUser(userID) {
+    try {
+        const firstBrandOfUser = await airtableFEED.read({
+            filterByFormula: `userID = "${userID}"`,
+            maxRecords: 1
+        },{tableName:"User_Brand"})
+        if (firstBrandOfUser.length > 0) return firstBrandOfUser[0]
+        else return null
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 
 function checkValidForm(formID) {
     var isValid = true
@@ -78,11 +94,22 @@ export default class Signin extends React.Component {
             }
             btnQueryEffectStart($(this))
             getUser($("#username").val(), $("#password").val())
-            .then(res => {
-                if (res && res.length > 0) {
+            .then(user => {
+                console.log("user: ", user)
+                if (user) {
                     $("#notice").hide()
                     setCookie(null, 'isLoggedIn', true, {maxAge: 30 * 24 * 60 * 60,path: '/',})
-                    setCookie(null, 'userID', res[0].fields.ID, {maxAge: 30 * 24 * 60 * 60,path: '/',})
+                    setCookie(null, 'userID', user.fields.ID, {maxAge: 30 * 24 * 60 * 60,path: '/',})
+                    
+                    getFirstBrandOfUser(user.fields.ID)
+                    .then(userBrand => {
+                        console.log(userBrand)
+                        if (userBrand) {
+                            Router.push(`/feed/${userBrand.fields.brandID}`)
+                        } else {
+                            alert("Tài khoản của bạn chưa được cấp quyền vào hệ thống.")
+                        }
+                    })
                 } else {
                     $("#notice").show()
                 }
