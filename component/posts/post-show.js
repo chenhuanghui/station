@@ -4,7 +4,7 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 // docs here: https://www.npmjs.com/package/javascript-time-ago
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-
+import { Player } from 'video-react';
 
 // COMPONENT
 import CommentInput from '../../component/comments/comment-input'
@@ -121,16 +121,22 @@ export default class PostShow extends React.Component {
 
                         <p className="mb-3" dangerouslySetInnerHTML={{__html:postContent && postContent.fields.content}}></p>
 
-                        <p className="text-center mb-3">
+                        <div className="text-center mb-3">
                             { postContent && postContent.fields.photos
                             ?   postContent.fields.photos[0].type === "video/quicktime"
-                                ? <video id={`video-control-${postContent.fields.ID}`} width="640" height="360" preload controls className="img-fluid rounded">
-                                    <source src={postContent.fields.photos[0].url} />
-                                  </video>
+                                ? 
+                                // <video id={`video-control-${postContent.fields.ID}`} width="640" height="360" preload controls className="img-fluid rounded">
+                                //     <source src={postContent.fields.photos[0].url} />
+                                // </video>
+                                <div className="img-fluid rounded">
+                                    <Player>
+                                        <source src={postContent.fields.photos[0].url} />
+                                    </Player>
+                                </div>
                                 : <img src={postContent.fields.photos[0].url} alt="..." className="img-fluid rounded"/>                            
                             : null
                             }
-                        </p>
+                        </div>
                         <div className="mb-3">
                             <div className="row">
                                 <div className="col">
