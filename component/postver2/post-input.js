@@ -138,7 +138,7 @@ export default class PostInput extends React.Component {
                 <div className="card-body">
                     <form>
                         <div className="form-group">
-                            <textarea className="form-control form-control-flush form-control-auto" id="post-content" data-toggle="autosize" rows="3" placeholder="Start a post..." style={{"overflow": "hidden", "overflowWrap": "break-word", "height": "68px"}}></textarea>
+                            <textarea className="form-control form-control-flush form-control-auto" id="post-content" data-toggle="autosize" rows="3" placeholder="Start a post..." style={{"overflow": "hidden", "overflowWrap": "break-word"}}></textarea>
                         </div>
                     </form>
 

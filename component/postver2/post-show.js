@@ -10,6 +10,7 @@ const airtableFEED = new AirtablePlus({
     baseID: process.env.AIR_TABLE_BASE_ID_FEED,
     apiKey: process.env.AIR_TABLE_API_KEY,
 });
+const cookies = parseCookies();
 
 async function getPostByID (pID) {
     try {
@@ -38,6 +39,19 @@ async function getCommentByPostID (pID) {
     }catch(e) {
         console.log(e)
     }    
+}
+
+async function updatePostContentByRecPostID (recPost, newContent) {
+    try {
+        const updatePost = await airtableFEED.update(recPost,{
+            content: newContent
+        },{tableName: "Post"})
+        
+        console.log("update Post: ", updatePost)
+        return updatePost
+    }catch(e) {
+        console.log(e)
+    }
 }
 
 async function updateReaction(recPostID, userID, type) {
@@ -90,8 +104,7 @@ function countReaction(postObj, type) {
             reactionList = JSON.parse("[" + postObj.dislike + "]")
             return reactionList.length
         } else return 0
-    }
-    
+    }    
 }
 
 export default class PostShow extends React.Component {
@@ -103,11 +116,11 @@ export default class PostShow extends React.Component {
             postData: [],
             comments : [],
             like:0,
-            dislike: 0
+            dislike: 0,
+            postUserID: null
         }
     }
     componentDidMount() {
-
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -121,8 +134,9 @@ export default class PostShow extends React.Component {
                 console.log(post)
                 this.setState({post_id: curPostId})
                 this.setState({postData: post.fields})
+                this.setState({postUserID: post.fields.userID})   
                 this.setState({like: countReaction(post.fields,0)}) 
-                this.setState({dislike: countReaction(post.fields,1)})     
+                this.setState({dislike: countReaction(post.fields,1)})  
             })
             
             getCommentByPostID(curPostId)
@@ -141,8 +155,16 @@ export default class PostShow extends React.Component {
         })        
     }
 
+    updatePostContent = (postID, recPostID) => {
+        console.log("onblur: ", postID, "-", recPostID, '*' , $(`#post-show-content-${postID}`).text())
+        updatePostContentByRecPostID(recPostID, $(`#post-show-content-${postID}`).text())
+        .then(res=> {
+            console.log("update post content: ", res)
+        })
+    }
+
     render() {        
-        const {postData, post_id, comments, like, dislike} = this.state
+        const {postData, post_id, comments, like, dislike, postUserID} = this.state
         const slideProperties = {
             arrows: false,
             infinite: false,
@@ -173,21 +195,16 @@ export default class PostShow extends React.Component {
                                         <time dateTime="2018-05-24">{postData.createdAt ? `${new Date(postData.createdAt).toLocaleTimeString()}, ${new Date(postData.createdAt).toLocaleDateString()}`:null}</time>
                                     </p>
                                 </div>
-                                <div className="col-auto">
-                                    <div className="dropdown">
-                                        <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fe fe-more-vertical"></i></a>
-                                        <div className="dropdown-menu dropdown-menu-right"> <a href="#!" className="dropdown-item">Action</a>
-                                            <a href="#!" className="dropdown-item">Another action</a>
-                                            <a href="#!" className="dropdown-item">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
 
                         </div>
-
-                        <p className="mb-3" dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
+                        
+                        { cookies.userID === postUserID
+                        ? <p contenteditable="true" onBlur={()=> this.updatePostContent(post_id, this.props.post_rec_id)} className="mb-3 post-content" id={`post-show-content-${post_id}`} dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
+                        : <p className="mb-3 post-content" id={`post-show-content-${post_id}`} dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
+                        }
+                        
+                        
                         
                         { postData && postData.attachments
                         ?    <div className="text-center mb-3">
@@ -242,6 +259,9 @@ export default class PostShow extends React.Component {
                         />
                     </div>
                 </div>  
+                <style jsx>{`
+                .post-content-edit:hover{cursor: pointer}
+                `}</style>
             </>     
         );
     }
