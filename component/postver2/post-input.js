@@ -42,7 +42,8 @@ async function createPost(postContent, postAttachment, postToBrand, byUser) {
         },{tableName:"Brand_Post"})
 
         console.log("posttobrand: ", createPostToBrand)
-        return createPost
+        
+        return {createPost,createPostToBrand}
 
     } catch(e) {
         console.log(e)
@@ -64,13 +65,16 @@ export default class PostInput extends React.Component {
         this.state = {
             user: null,
             brand: null,
-            postAttachment: []
+            postAttachment: [],
+            isPosting: false
         }
     }
     componentDidMount() {
         let currentComponent = this
         
         $(".btn-action-post").click(function(){
+            if (this.state.isPosting) return;
+
             var postContent = $("#post-content").val()
             var postAttachment = getAttachmentList()
             console.log("attachment: ", postAttachment)
@@ -78,6 +82,9 @@ export default class PostInput extends React.Component {
             createPost(postContent, postAttachment, currentComponent.state.brand, currentComponent.state.user)
             .then(res => {
                 console.log("post result: ", res)
+                if (!res.createPost || !res.createPostToBrand) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
+                $("#post-content").text('')
+                $("#file-upload-show").html('')
             })
         })
     }
@@ -157,7 +164,8 @@ export default class PostInput extends React.Component {
                                     uploadId = {item.uploadId}
                                     url={item.url} 
                                     filename={item.filename} 
-                                    minetype={item.minetype}
+                                    mimetype={item.mimetype}
+                                    size = {item.size}
                                 />
                             ))
                         }
