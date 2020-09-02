@@ -97,10 +97,11 @@ export default class PostInput extends React.Component {
             createPost(postContent, postAttachment, currentComponent.state.brand, currentComponent.state.user)
             .then(res => {
                 console.log("post result: ", res)
-                if (res) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
+                if (!res) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
                 $("#post-content").val('')
                 $(".image-post").remove()
                 btnQueryEffectDone($(this))
+                location.reload()
             })
         })
     }
