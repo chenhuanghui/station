@@ -23,28 +23,24 @@ export default class CommentShow extends React.Component {
                     <div className="row">
                         <div className="col-auto">
                             <a className="avatar avatar-sm" href="#">
-                                {this.props.avatar
-                                ? <img src={this.props.avatar[0].url} alt={this.props.author} className="avatar-img rounded-circle"/>
-                                : <img src="/assets/img/avatars/profiles/avatar-3.jpg" alt="..." className="avatar-img rounded-circle"/>
-                                }
+                                <img src={this.props.avatar} alt={this.props.author} className="avatar-img rounded-circle"/>
                             </a>
                         </div>
                         <div className="col ml-n2">
                             <div className="comment-body">
-                                <p className="text-center mb-3">
-                                    { this.props.photo
-                                    ? 
-                                    <img src={this.props.photo[0].url} alt="..." className="img-fluid rounded"/>
+                                <div className="text-center mb-3">
+                                    { this.props.attachments
+                                    ? <img src={this.props.attachments[0].url} className="img-fluid rounded"/>
                                     : null
                                     }
-                                </p>
+                                </div>
                                 <div className="row">
                                     <div className="col"><h5 className="comment-title">{this.props.author}</h5></div>
                                     <div className="col-auto">
-                                        <time className="comment-time">{new Date(this.props.time).toLocaleTimeString()}, {new Date(this.props.time).toLocaleDateString()}</time>
+                                        <time className="comment-time">{this.props.createdAt ? `${new Date(this.props.createdAt).toLocaleTimeString()}, ${new Date(this.props.createdAt).toLocaleDateString()}`:null}</time>
                                     </div>
                                 </div>
-                                <p className="comment-text">{this.props.comment}</p>
+                                <p className="comment-text">{this.props.content}</p>
                             </div>
                         </div>
                     </div>

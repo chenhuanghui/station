@@ -84,6 +84,7 @@ function LayoutFeedByStation ({brand, feed}) {
                             {feed && feed.map((item, index)=> (
                                 <PostShow key={index}
                                     post_id = {item.fields.postID}
+                                    user = {user}
                                 />
                             ))}
                             

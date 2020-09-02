@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
-
+import CommentShow from '../../component/commentsver2/comment-show'
 // docs here: https://www.npmjs.com/package/javascript-time-ago
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
@@ -26,8 +26,21 @@ async function getPostByID (pID) {
         else return []
     }catch(e) {
         console.log(e)
-    }
-    
+    }    
+}
+
+async function getCommentByPostID (pID) {
+    try {
+        console.log("post ID: ", pID )
+        const comment = await airtableFEED.read({
+            filterByFormula: `postID = "${pID.toString()}"`
+        },{tableName: "Comment"})
+        
+        console.log("queries Comment: ", comment)
+        return comment
+    }catch(e) {
+        console.log(e)
+    }    
 }
 
 export default class PostShow extends React.Component {
@@ -36,7 +49,8 @@ export default class PostShow extends React.Component {
 
         this.state = {
             post_id: null,
-            postData: []
+            postData: [],
+            comments : []
         }
     }
     componentDidMount() {
@@ -54,12 +68,17 @@ export default class PostShow extends React.Component {
                 console.log(post)
                 this.setState({post_id: curPostId})
                 this.setState({postData: post.fields})
-            }) 
+            })
+            getCommentByPostID(curPostId)
+            .then (commentRes => {
+                console.log("comment:", commentRes)
+                this.setState({comments: commentRes})
+            })
         }
     }
 
     render() {        
-        const {postData} = this.state
+        const {postData, post_id, comments} = this.state
         const slideProperties = {
             arrows: false,
             infinite: false,
@@ -130,16 +149,20 @@ export default class PostShow extends React.Component {
                         </div>
 
                         <hr className='dropdown-divider'/>
-{/*                        <div id={`comment-block-${curPID}`}>
+                        <div id={`comment-block-${post_id}`}>
                             {comments && comments.map((item, index) => (
-                                <CommentShow photo={item.fields.commentAttachments} author={item.fields.commentByName} avatar={item.fields.commentByAvatar} comment={item.fields.commentDesc} time={item.fields.createdAt} key={index}>
-                                    <span className="hide"></span>
-                                </CommentShow>
+                                <CommentShow key={index}
+                                avatar = {item.fields.avatar ? item.fields.avatar : "/assets/img/avatars/profiles/avatar-1.jpg"}
+                                content = {item.fields.content}
+                                author = {item.fields.userName}
+                                createdAt = {item.fields.createdAt}
+                                attachments = {item.fields.attachments}
+                                />
                             ))}
                         </div>
                         
                         
-                        
+                        {/* 
                         <hr/>
                         <CommentInput>
                             <span className="hide" post={curPID}></span>
