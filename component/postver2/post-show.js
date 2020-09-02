@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import CommentShow from '../../component/commentsver2/comment-show'
-// docs here: https://www.npmjs.com/package/javascript-time-ago
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import { Player } from 'video-react';
+import CommentInput from '../../component/commentsver2/comment-input'
 import { Slide } from 'react-slideshow-image';
-import { Zoom } from 'react-slideshow-image';
 
 const AirtablePlus = require('airtable-plus');  
 const airtableFEED = new AirtablePlus({
@@ -84,7 +80,8 @@ export default class PostShow extends React.Component {
             infinite: false,
             autoplay:false,
             indicators: true
-          }
+        }
+        console.log("user from props: ", this.props.user)
         return (
             <>
                 {this.props.children}
@@ -161,12 +158,11 @@ export default class PostShow extends React.Component {
                             ))}
                         </div>
                         
-                        
-                        {/* 
-                        <hr/>
-                        <CommentInput>
-                            <span className="hide" post={curPID}></span>
-                        </CommentInput> */}
+                        <hr className='dropdown-divider'/>
+                        <CommentInput
+                            post_id= {post_id}
+                            user = {this.props.user}
+                        />
                     </div>
                 </div>  
             </>     
