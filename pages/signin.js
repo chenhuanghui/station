@@ -105,7 +105,7 @@ export default class Signin extends React.Component {
                     .then(userBrand => {
                         console.log(userBrand)
                         if (userBrand) {
-                            Router.push(`/feed/${userBrand.fields.brandID}`)
+                            Router.push(`/feeds/${userBrand.fields.brandID}`)
                         } else {
                             alert("Tài khoản của bạn chưa được cấp quyền vào hệ thống.")
                         }

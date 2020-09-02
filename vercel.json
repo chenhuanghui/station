@@ -7,6 +7,7 @@
         "AIR_TABLE_API_KEY_FEED":"@air_table_api_key_feed",
         "AIR_TABLE_BASE_ID_USER":"@air_table_base_id_user",
         "AIR_TABLE_BASE_ID_SOPERATION":"@air_table_base_id_soperation",
+        "AIR_TABLE_BASE_ID_BRAND":"@air_table_base_id_brand",
         "AIR_TABLE_API_KEY":"@air_table_api_key"
       }
     }

@@ -18,6 +18,7 @@ module.exports = {
         AIR_TABLE_API_KEY_FEED: process.env.AIR_TABLE_API_KEY_FEED,
         AIR_TABLE_BASE_ID_USER: process.env.AIR_TABLE_BASE_ID_USER,
         AIR_TABLE_BASE_ID_SOPERATION: process.env.AIR_TABLE_BASE_ID_SOPERATION,
+        AIR_TABLE_BASE_ID_BRAND: process.env.AIR_TABLE_BASE_ID_BRAND
         
     }
 }
