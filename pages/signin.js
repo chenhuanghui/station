@@ -102,13 +102,13 @@ export default class Signin extends React.Component {
                     $("#notice").hide()
                     setCookie(null, 'isLoggedIn', true, {maxAge: 30 * 24 * 60 * 60,path: '/',})
                     setCookie(null, 'userID', user.fields.ID, {maxAge: 30 * 24 * 60 * 60,path: '/',})
-                    setCookie(null, 'brandID', userBrand.fields.brandID, {maxAge: 30 * 24 * 60 * 60,path: '/',})
                     setCookie(null, 'version', "1.0", {maxAge: 30 * 24 * 60 * 60,path: '/',})
 
                     getFirstBrandOfUser(user.fields.ID)
                     .then(userBrand => {
                         console.log(userBrand)
                         if (userBrand) {
+                            setCookie(null, 'brandID', userBrand.fields.brandID, {maxAge: 30 * 24 * 60 * 60,path: '/',})
                             Router.push(`/feeds/${userBrand.fields.brandID}`)
                         } else {
                             alert("Tài khoản của bạn chưa được cấp quyền vào hệ thống.")
