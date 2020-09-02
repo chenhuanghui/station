@@ -98,13 +98,6 @@ export default class PostShow extends React.Component {
                         
                         { postData && postData.attachments
                         ?    <div className="text-center mb-3">
-                                {/* <Slide easing="ease">
-                                    {postData.attachments.length > 0 && postData.attachments.map((item, index)=>(
-                                        <div className="each-slide" style={{ objectFit: "cover", width: "100%" }}>
-                                            <div style={{'backgroundImage': `url(${item.url})`}} ></div>
-                                        </div>
-                                    ))}
-                                </Slide> */}
                                 <Slide {...slideProperties}>
                                     {postData.attachments.map((each, index) => (
                                     <div key={index} style={{width: "100%"}}>
@@ -115,7 +108,6 @@ export default class PostShow extends React.Component {
                                                 <source src={each.url} type="video/mp4"/>
                                             </video>
                                         }
-                                        
                                     </div>
                                     ))}
                                 </Slide>
