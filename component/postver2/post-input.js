@@ -32,18 +32,19 @@ async function createPost(postContent, postAttachment, postToBrand, byUser) {
             attachments: queryAttachment,
             userID: byUser.ID.toString(),
             userName: byUser.name,
-            userAvatar: byUser.avatar ? byUser.avatar[0].url : ''
+            userAvatar: byUser.avatar ? byUser.avatar[0].url : '',
+            brandID: postToBrand.ID.toString()
         },{tableName:"Post"})
 
-        const createPostToBrand = await airtableFEED.create({
-            brandID: postToBrand.ID.toString(),
-            postID: createPost.fields.ID.toString(),
-            createdAt: createPost.fields.createdAt
-        },{tableName:"Brand_Post"})
+        // const createPostToBrand = await airtableFEED.create({
+        //     brandID: postToBrand.ID.toString(),
+        //     postID: createPost.fields.ID.toString(),
+        //     createdAt: createPost.fields.createdAt
+        // },{tableName:"Brand_Post"})
 
-        console.log("posttobrand: ", createPostToBrand)
+        // console.log("posttobrand: ", createPostToBrand)
         
-        return {createPost,createPostToBrand}
+        return createPost
 
     } catch(e) {
         console.log(e)
@@ -96,7 +97,7 @@ export default class PostInput extends React.Component {
             createPost(postContent, postAttachment, currentComponent.state.brand, currentComponent.state.user)
             .then(res => {
                 console.log("post result: ", res)
-                if (!res.createPost || !res.createPostToBrand) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
+                if (res) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
                 $("#post-content").val('')
                 $(".image-post").remove()
                 btnQueryEffectDone($(this))
