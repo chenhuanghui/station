@@ -10,6 +10,8 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 // COMPONENT
 import NavBar from '../../component/nav/new_nav'
 import PostInput from '../../component/postver2/post-input'
+import PostShow from '../../component/postver2/post-show'
+
 // ====================================
 // GLOBAL FUNCTIONS
 
@@ -42,7 +44,7 @@ async function getUserByID(userID) {
     else return null
 }
 
-function LayoutFeedByStation ({brand}) {
+function LayoutFeedByStation ({brand, feed}) {
     const router = useRouter();
     const cookies = parseCookies();
     const [sID, setSID] = useState(null);
@@ -79,6 +81,12 @@ function LayoutFeedByStation ({brand}) {
                                 brand = {brand.fields}
                                 user = {user}
                             />
+                            {feed && feed.map((item, index)=> (
+                                <PostShow key={index}
+                                    post_id = {item.fields.postID}
+                                />
+                            ))}
+                            
                         </div>
                     </div>
                 </div>
@@ -89,15 +97,19 @@ function LayoutFeedByStation ({brand}) {
 
 LayoutFeedByStation.getInitialProps = async ({query}) => {
     console.log("______ initialprops:", query.id)
-
-    console.log(airtableBRAND)
     
     const brandData = await airtableBRAND.read({
         filterByFormula: `ID = "${query.id}"`,
         maxRecords: 1
     },{tableName:"Brand"});
-    console.log("Brand", brandData)
-    return { brand: brandData[0] }
+
+    const brandFeed = await airtableFEED.read({
+        filterByFormula: `brandID = "${brandData[0].fields.ID}"`
+    },{tableName:"Brand_Post"});
+
+
+    console.log("brandFeed", brandFeed)
+    return { brand: brandData[0], feed:brandFeed }
 }
 
 export default LayoutFeedByStation
