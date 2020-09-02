@@ -99,6 +99,31 @@ export default class CommentInput extends React.Component {
         .then(commentRes => {
             if (!commentRes) alert("Có lỗi xảy ra, vui lòng thực hiện lại")            
             console.log("comment Res: ", commentRes)
+            
+            var htmlbuilder = `
+                <div class="comment mb-3 comment-show">
+                    <div class="row">
+                        <div class="col-auto">
+                            <a class="avatar avatar-sm" href="#">
+                                <img src=${commentRes.fields.userAvatar} alt=${commentRes.fields.userName} class="avatar-img rounded-circle"/>
+                            </a>
+                        </div>
+                        <div class="col ml-n2">
+                            <div class="comment-body">
+                                <div class="row">
+                                    <div class="col"><h5 class="comment-title">${commentRes.fields.userName}</h5></div>
+                                    <div class="col-auto">
+                                        <time class="comment-time">${new Date(commentRes.fields.createdAt).toLocaleTimeString()}, ${new Date(commentRes.fields.createdAt).toLocaleDateString()}</time>
+                                    </div>
+                                </div>
+                                <p class="comment-text">${commentRes.fields.content}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+            $(`#comment-block-${pID}`).append(htmlbuilder)
+            
             $(`#${pID}`).find(".comment").val('')
             $(".image-post").remove()
             btnQueryEffectDone(btnAction)
