@@ -39,7 +39,6 @@ async function getUserByID(userID) {
         filterByFormula: `ID = "${userID}"`,
         maxRecords: 1
     },{tableName:"User"});
-    console.log("User", userData)
     if (userData.length > 0) return userData[0].fields
     else return null
 }
@@ -59,6 +58,7 @@ function LayoutFeedByStation ({brand, feed}) {
         
         getUserByID(cookies.userID)
         .then(user => {
+            console.log("User", user)
             if (user === null) Router.push('/signin')
             setUser(user)
         })
@@ -83,8 +83,9 @@ function LayoutFeedByStation ({brand, feed}) {
                             />
                             {feed && feed.map((item, index)=> (
                                 <PostShow key={index}
-                                    post_id = {item.fields.postID}
+                                    post_id = {item.fields.ID}
                                     user = {user}
+                                    post_rec_id = {item.id}
                                 />
                             ))}
                             
@@ -105,8 +106,9 @@ LayoutFeedByStation.getInitialProps = async ({query}) => {
     },{tableName:"Brand"});
 
     const brandFeed = await airtableFEED.read({
-        filterByFormula: `brandID = "${brandData[0].fields.ID}"`
-    },{tableName:"Brand_Post"});
+        filterByFormula: `brandID = "${query.id}"`,
+        sort: [ {field: 'createdAt', direction: 'desc'},]
+    },{tableName:"Post"});
 
 
     console.log("brandFeed", brandFeed)

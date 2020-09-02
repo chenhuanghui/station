@@ -3,6 +3,7 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import CommentShow from '../../component/commentsver2/comment-show'
 import CommentInput from '../../component/commentsver2/comment-input'
 import { Slide } from 'react-slideshow-image';
+import { post } from 'jquery';
 
 const AirtablePlus = require('airtable-plus');  
 const airtableFEED = new AirtablePlus({
@@ -39,6 +40,60 @@ async function getCommentByPostID (pID) {
     }    
 }
 
+async function updateReaction(recPostID, userID, type) {
+    try {
+        const readPost = await airtableFEED.find(recPostID,{tableName:"Post"})
+        
+        var reactionList
+        if (type === 0) {
+            if (readPost.fields.like) {
+                reactionList = JSON.parse("[" + readPost.fields.like + "]")
+            } else {reactionList = JSON.parse("[]")}
+        } else {
+            if (readPost.fields.dislike) {
+                reactionList = JSON.parse("[" + readPost.fields.dislike + "]")
+            } else {reactionList = JSON.parse("[]")}
+        }
+            
+        var index = $.inArray(userID, reactionList)
+        if (index === -1) {
+            reactionList.push(userID)
+            if (type === 0) {
+                const reactionPost = await airtableFEED.update(recPostID,{
+                    like: reactionList.toString()
+                },{tableName: "Post"})
+                return true
+            } else {
+                const reactionPost = await airtableFEED.update(recPostID,{
+                    dislike: reactionList.toString()
+                },{tableName: "Post"})
+                return true
+            }            
+        } else return false
+        
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+function countReaction(postObj, type) {
+    var reactionList
+    if (type === 0) { // like
+        if (postObj.like) {
+            reactionList = JSON.parse("[" + postObj.like + "]")
+            return reactionList.length
+        } else {
+            return 0
+        }
+    } else { // dislike
+        if (postObj.dislike) {
+            reactionList = JSON.parse("[" + postObj.dislike + "]")
+            return reactionList.length
+        } else return 0
+    }
+    
+}
+
 export default class PostShow extends React.Component {
     constructor(props) {
         super(props);
@@ -46,7 +101,9 @@ export default class PostShow extends React.Component {
         this.state = {
             post_id: null,
             postData: [],
-            comments : []
+            comments : [],
+            like:0,
+            dislike: 0
         }
     }
     componentDidMount() {
@@ -64,7 +121,10 @@ export default class PostShow extends React.Component {
                 console.log(post)
                 this.setState({post_id: curPostId})
                 this.setState({postData: post.fields})
+                this.setState({like: countReaction(post.fields,0)}) 
+                this.setState({dislike: countReaction(post.fields,1)})     
             })
+            
             getCommentByPostID(curPostId)
             .then (commentRes => {
                 console.log("comment:", commentRes)
@@ -73,8 +133,16 @@ export default class PostShow extends React.Component {
         }
     }
 
+    reactionAction = (recPostID, userID, type) => {
+        updateReaction(recPostID, userID, type)
+        .then(res => {
+            if (res === true && type === 0 ) this.setState({like: this.state.like + 1})
+            if (res === true && type === 1 ) this.setState({dislike: this.state.dislike + 1})
+        })        
+    }
+
     render() {        
-        const {postData, post_id, comments} = this.state
+        const {postData, post_id, comments, like, dislike} = this.state
         const slideProperties = {
             arrows: false,
             infinite: false,
@@ -133,12 +201,12 @@ export default class PostShow extends React.Component {
                         <div className="mb-3">
                             <div className="row">
                                 <div className="col">
-                                    <span className="btn btn-sm btn-white mr-2">
-                                        👍 {postData && postData.like ? postData.like : 0}
+                                    <span className="btn btn-sm btn-white mr-2" onClick={() => this.reactionAction(this.props.post_rec_id, this.props.user.ID,0)}>
+                                        👍 {like}
                                     </span>
-                                    <a href="#!" className="btn btn-sm btn-white">
-                                        😬 {postData && postData.dislike ? postData.dislike : 0}
-                                    </a>
+                                    <span className="btn btn-sm btn-white" onClick={() => this.reactionAction(this.props.post_rec_id, this.props.user.ID,1)}>
+                                        😬 {dislike}
+                                    </span>
                                     
                                 </div>
                                 <div className="col-auto"></div>
