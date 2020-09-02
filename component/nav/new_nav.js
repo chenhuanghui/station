@@ -68,14 +68,17 @@ export default class NavBarNew extends React.Component {
                     <div className="collapse navbar-collapse" id="sidebarCollapse">
                         {/* menu group block */}
                         <ul className="navbar-nav">
-                            <li className="nav-item">
-                                
+                            <li className="nav-item">                                
                                 <Link href="/feeds/[id]" as = {`/feeds/${this.props.brand_id}`}>
                                     <a className="nav-link active"><i className="fe fe-wind"></i> New Feed</a>
                                 </Link>
                                 
                                 <Link href="#">
                                     <a className="nav-link"><i className="fe fe-home"></i> Ticket</a>
+                                </Link>
+
+                                <Link href="#">
+                                    <a className="nav-link"><i className="fe fe-monitor"></i> Report</a>
                                 </Link>
                             </li>
 
@@ -85,32 +88,31 @@ export default class NavBarNew extends React.Component {
                         <div className="mt-auto"></div>
 
                         <div className="navbar-user d-none d-md-flex" id="sidebarUser">
-
-                        <a href="#sidebarModalActivity" className="navbar-user-link" data-toggle="modal">
-                            <span className="icon"><i className="fe fe-bell"></i></span>
-                        </a>
-
-                        {/* <DropUpWithImage /> */}
-                        <div className="dropup">
-                            <a href="#" id="sidebarIconCopy" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div className="avatar avatar-sm avatar-online">
-                                    <img src={this.props.avatar} className="avatar-img rounded-circle" alt="..."/>
-                                </div>
+                            <a href="#sidebarModalActivity" className="navbar-user-link" data-toggle="modal">
+                                <span className="icon"><i className="fe fe-bell"></i></span>
                             </a>
-                            {/* Menu */}
-                            <div className="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                            <hr className="dropdown-divider" />                  
-                            <span className="dropdown-item logout">Logout</span>
+
+                            {/* <DropUpWithImage /> */}
+                            <div className="dropup">
+                                <a href="#" id="sidebarIconCopy" className="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div className="avatar avatar-sm avatar-online">
+                                        <img src={this.props.avatar} className="avatar-img rounded-circle" alt="..."/>
+                                    </div>
+                                </a>
+                                {/* Menu */}
+                                
+                                <div className="dropdown-menu" aria-labelledby="sidebarIconCopy">
+                                    {/* <hr className="dropdown-divider" />                   */}
+                                    <span className="dropdown-item logout">Logout</span>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Icon */}
-                        <a href="#sidebarModalSearch" className="navbar-user-link" data-toggle="modal">
-                            <span className="icon">
-                            <i className="fe fe-search"></i>
-                            </span>
-                        </a>
-
+                            {/* Icon */}
+                            <a href="#sidebarModalSearch" className="navbar-user-link" data-toggle="modal">
+                                <span className="icon">
+                                <i className="fe fe-search"></i>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     {/* end .navbar-collapse */}
