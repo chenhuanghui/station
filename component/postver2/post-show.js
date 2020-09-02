@@ -5,6 +5,8 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import { Player } from 'video-react';
+import { Slide } from 'react-slideshow-image';
+import { Zoom } from 'react-slideshow-image';
 
 const AirtablePlus = require('airtable-plus');  
 const airtableFEED = new AirtablePlus({
@@ -58,6 +60,12 @@ export default class PostShow extends React.Component {
 
     render() {        
         const {postData} = this.state
+        const slideProperties = {
+            arrows: false,
+            infinite: false,
+            autoplay:false,
+            indicators: true
+          }
         return (
             <>
                 {this.props.children}
@@ -90,9 +98,21 @@ export default class PostShow extends React.Component {
                         
                         { postData && postData.attachments
                         ?    <div className="text-center mb-3">
-                                {postData.attachments.map((item, index)=>(
-                                    <img src={item.url} alt="..." className="img-fluid rounded"/>
-                                ))}
+                                {/* <Slide easing="ease">
+                                    {postData.attachments.length > 0 && postData.attachments.map((item, index)=>(
+                                        <div className="each-slide" style={{ objectFit: "cover", width: "100%" }}>
+                                            <div style={{'backgroundImage': `url(${item.url})`}} ></div>
+                                        </div>
+                                    ))}
+                                </Slide> */}
+
+                                <Slide {...slideProperties}>
+                                    {postData.attachments.map((each, index) => (
+                                    <div key={index} style={{width: "100%"}}>
+                                        <img className="single_slider" style={{maxHeight:"640px"}} src={each.url} className="img-fluid rounded"/>
+                                    </div>
+                                    ))}
+                                </Slide>
                             </div>
                         : null
                         }
