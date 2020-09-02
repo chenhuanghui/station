@@ -31,7 +31,8 @@ async function getCommentByPostID (pID) {
     try {
         console.log("post ID: ", pID )
         const comment = await airtableFEED.read({
-            filterByFormula: `postID = "${pID.toString()}"`
+            filterByFormula: `postID = "${pID.toString()}"`,
+            sort: [ {field: 'createdAt', direction: 'asc'},]
         },{tableName: "Comment"})
         
         console.log("queries Comment: ", comment)
