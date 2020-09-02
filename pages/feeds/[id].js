@@ -9,6 +9,7 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 // COMPONENT
 import NavBar from '../../component/nav/new_nav'
+import PostInput from '../../component/postver2/post-input'
 // ====================================
 // GLOBAL FUNCTIONS
 
@@ -56,6 +57,7 @@ function LayoutFeedByStation ({brand}) {
         
         getUserByID(cookies.userID)
         .then(user => {
+            if (user === null) Router.push('/signin')
             setUser(user)
         })
 
@@ -68,7 +70,19 @@ function LayoutFeedByStation ({brand}) {
                 user_id={cookies.userID}
                 avatar = {user && user.avatar ? user.avatar[0].url : "../assets/img/avatars/profiles/avatar-1.jpg"}
             />
-            hello world
+            
+            <div className="main-content">
+                <div className="container-fluid">
+                    <div className="row mt-4 mt-md-5 justify-content-center">
+                        <div className="col-12 col-lg-10 col-xl-8">
+                            <PostInput 
+                                brand = {brand.fields}
+                                user = {user}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
