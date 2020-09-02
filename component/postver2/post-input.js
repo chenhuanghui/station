@@ -58,6 +58,20 @@ function getAttachmentList(){
     return dataList
 }
 
+function btnQueryEffectStart(button) {
+    if (!button.hasClass("disabled")) 
+        button.addClass("disabled").append(`<span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"></span>`)
+    else return;
+}
+
+function btnQueryEffectDone(button) {
+    if (button.hasClass("disabled")) {
+        button.removeClass("disabled")
+        button.find(`.spinner-border`).remove()
+    }
+    else return;
+}
+
 export default class PostInput extends React.Component {
     constructor(props) {
         super(props);
@@ -73,8 +87,8 @@ export default class PostInput extends React.Component {
         let currentComponent = this
         
         $(".btn-action-post").click(function(){
-            if (this.state.isPosting) return;
-
+            if (currentComponent.state.isPosting) return;
+            btnQueryEffectStart($(this))
             var postContent = $("#post-content").val()
             var postAttachment = getAttachmentList()
             console.log("attachment: ", postAttachment)
@@ -85,6 +99,7 @@ export default class PostInput extends React.Component {
                 if (!res.createPost || !res.createPostToBrand) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
                 $("#post-content").text('')
                 $("#file-upload-show").html('')
+                btnQueryEffectDone($(this))
             })
         })
     }
