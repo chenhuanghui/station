@@ -171,9 +171,18 @@ export default class PostShow extends React.Component {
                                     <p className="card-text small text-muted"> 
                                         <span className="fe fe-clock mr-2"></span> 
                                         <time dateTime="2018-05-24">{postData.createdAt ? `${new Date(postData.createdAt).toLocaleTimeString()}, ${new Date(postData.createdAt).toLocaleDateString()}`:null}</time>
-                                        
                                     </p>
                                 </div>
+                                <div className="col-auto">
+                                    <div className="dropdown">
+                                        <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fe fe-more-vertical"></i></a>
+                                        <div className="dropdown-menu dropdown-menu-right"> <a href="#!" className="dropdown-item">Action</a>
+                                            <a href="#!" className="dropdown-item">Another action</a>
+                                            <a href="#!" className="dropdown-item">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
