@@ -39,7 +39,7 @@ export default class PostInput extends React.Component {
                     </p>
                 </div>
                 <div className="col-auto">
-                    <span className="remove" data={this.props.uploadId}>x</span>
+                    <span className="remove fe fe-x mr-3" data={this.props.uploadId}></span>
                 </div>
             </div>
             <style jsx>{`
