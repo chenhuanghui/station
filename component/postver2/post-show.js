@@ -105,11 +105,17 @@ export default class PostShow extends React.Component {
                                         </div>
                                     ))}
                                 </Slide> */}
-
                                 <Slide {...slideProperties}>
                                     {postData.attachments.map((each, index) => (
                                     <div key={index} style={{width: "100%"}}>
-                                        <img className="single_slider" style={{maxHeight:"640px"}} src={each.url} className="img-fluid rounded"/>
+                                        {each.type === "image/jpeg"
+                                        ? <img className="single_slider" style={{maxHeight:"640px"}} src={each.url} className="img-fluid rounded"/>
+                                        : 
+                                            <video width="320" height="640" controls>
+                                                <source src={each.url} type="video/mp4"/>
+                                            </video>
+                                        }
+                                        
                                     </div>
                                     ))}
                                 </Slide>
