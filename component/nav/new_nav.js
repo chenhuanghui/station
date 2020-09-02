@@ -28,7 +28,28 @@ export default class NavBarNew extends React.Component {
         }
     }
 
-    componentDidMount() {        
+    componentDidMount() {    
+        //toggle main menu xs
+        $('.navbar-toggler').click(function(){
+            if (!$('.navbar-collapse').hasClass('show')) $('.navbar-collapse').addClass('show')
+            else $('.navbar-collapse').removeClass('show')
+        })
+        //toggle account menu xs
+        $('.navbar-user').click(function(){
+            if (!$('.dropdown').hasClass('show')) {
+                $('.dropdown').addClass('show')
+                $('.dropdown-menu-right').addClass('show')
+            } else {
+                $('.dropdown').removeClass('show')
+                $('.dropdown-menu-right').removeClass('show')
+            }
+        })
+        
+        // logout
+        $('.logout').click(function(){
+            destroyCookie(null, 'isLoggedIn', {path:'/'})
+            Router.push(`/signin`)
+        })    
     }
 
     render() {
@@ -118,6 +139,9 @@ export default class NavBarNew extends React.Component {
                     {/* end .navbar-collapse */}
                     </div>
                 </nav>
+                <style jsx>{`
+                    .logout{cursor: pointer;}
+                `}</style>
             </>
         )
     }
