@@ -97,8 +97,8 @@ export default class PostInput extends React.Component {
             .then(res => {
                 console.log("post result: ", res)
                 if (!res.createPost || !res.createPostToBrand) alert("Có lỗi xảy ra, vui lòng thực hiện lại")
-                $("#post-content").text('')
-                $("#file-upload-show").html('')
+                $("#post-content").val('')
+                $(".image-post").remove()
                 btnQueryEffectDone($(this))
             })
         })
@@ -126,8 +126,6 @@ export default class PostInput extends React.Component {
         curPostAttachment.push(file)
         this.setState({postAttachment:curPostAttachment})
     }
-
-    
 
     render() {      
         const {postAttachment} = this.state

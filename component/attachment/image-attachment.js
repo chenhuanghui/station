@@ -23,8 +23,6 @@ export default class PostInput extends React.Component {
 
     render() {      
         return (
-            <>
-            {this.props.children}
             <div className='row align-items-center image-post mt-3' id={this.props.uploadId} data={this.props.url}>
                 <div className='col-auto'>
                     <a href='#' className='avatar'>
@@ -41,13 +39,12 @@ export default class PostInput extends React.Component {
                 <div className="col-auto">
                     <span className="remove fe fe-x mr-3" data={this.props.uploadId}></span>
                 </div>
+                <style jsx>{`
+                    .remove:hover{
+                        cursor: pointer
+                    }
+                `}</style>
             </div>
-            <style jsx>{`
-                .remove:hover{
-                    cursor: pointer
-                }
-            `}</style>
-            </>     
         );
     }
 }
