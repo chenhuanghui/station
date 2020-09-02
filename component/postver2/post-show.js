@@ -50,7 +50,7 @@ export default class PostShow extends React.Component {
         }
     }
     componentDidMount() {
-        let currentComponent = this
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -149,7 +149,7 @@ export default class PostShow extends React.Component {
                         <div id={`comment-block-${post_id}`}>
                             {comments && comments.map((item, index) => (
                                 <CommentShow key={index}
-                                avatar = {item.fields.avatar ? item.fields.avatar : "/assets/img/avatars/profiles/avatar-1.jpg"}
+                                avatar = {item.fields.userAvatar ? item.fields.userAvatar : "/assets/img/avatars/profiles/avatar-1.jpg"}
                                 content = {item.fields.content}
                                 author = {item.fields.userName}
                                 createdAt = {item.fields.createdAt}
