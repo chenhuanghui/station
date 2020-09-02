@@ -5,8 +5,8 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 export default class LayoutIndex extends React.Component {
     componentDidMount() {
         const cookies = parseCookies()
-        if(cookies.userID && cookies.isLoggedIn && cookies.stationID && cookies.role) {
-            Router.push(`/feed/recKcGBTwDEvjGjj4`)
+        if(cookies.userID && cookies.isLoggedIn && cookies.brandID && cookies.version) {
+            Router.push(`/feeds/${cookies.brandID}`)
         } else Router.push('/signin')                
     }
 
