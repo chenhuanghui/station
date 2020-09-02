@@ -48,7 +48,7 @@ async function getUser(emailLogin, passwordLogin) {
 
 async function getFirstBrandOfUser(userID) {
     try {
-        const firstBrandOfUser = await airtableFEED.read({
+        const firstBrandOfUser = await airtableSOPERATION.read({
             filterByFormula: `userID = "${userID}"`,
             maxRecords: 1
         },{tableName:"User_Brand"})
@@ -87,6 +87,8 @@ export default class Signin extends React.Component {
     }
 
     componentDidMount() {
+        destroyCookie(null, 'isLoggedIn', {path:'/'})
+
         $("#tryToLoggin").click(function(){
             if (!checkValidForm(".sign-in-form")) {
                 $("#notice").show()

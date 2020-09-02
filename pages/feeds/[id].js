@@ -52,7 +52,6 @@ function LayoutFeedByStation ({brand, feed}) {
     useEffect(() => {        
         // if not user --> redirect to Sign In page
         if(!cookies.isLoggedIn) {
-            destroyCookie(isLoggedIn)
             Router.push('/signin')
         }
         
