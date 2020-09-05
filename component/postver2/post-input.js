@@ -3,6 +3,7 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import loadable from '@loadable/component';
 
 import ImageAttachment from '../attachment/image-attachment'
+import TextareaAutosize from 'react-textarea-autosize';
 // ====================================
 // INIT GLOBAL VARIABLES
 const cookies = parseCookies();
@@ -35,14 +36,6 @@ async function createPost(postContent, postAttachment, postToBrand, byUser) {
             userAvatar: byUser.avatar ? byUser.avatar[0].url : '',
             brandID: postToBrand.ID.toString()
         },{tableName:"Post"})
-
-        // const createPostToBrand = await airtableFEED.create({
-        //     brandID: postToBrand.ID.toString(),
-        //     postID: createPost.fields.ID.toString(),
-        //     createdAt: createPost.fields.createdAt
-        // },{tableName:"Brand_Post"})
-
-        // console.log("posttobrand: ", createPostToBrand)
         
         return createPost
 
@@ -90,9 +83,9 @@ export default class PostInput extends React.Component {
         
         $(".btn-action-post").click(function(){
             if (currentComponent.state.isPosting) return;
+            
             btnQueryEffectStart($(this))
             var postContent = $("#post-content").val()
-            // console.log("break a line test: ___", postContent.replace(/\n/g, "<br />"))
             var postAttachment = getAttachmentList()
             console.log("attachment: ", postAttachment)
             
@@ -144,12 +137,11 @@ export default class PostInput extends React.Component {
             <div className="card post-input">
                 <div className="card-body">
                     <div className="form-group">
-                        <textarea 
+                        <TextareaAutosize 
                             className="form-control form-control-flush form-control-auto" 
                             id="post-content" data-toggle="autosize" rows="3" placeholder="Start a post..." 
                             onKeyUp={() => {this.countContentLength()}}
-                        >
-                        </textarea>
+                        />
                     </div>
 
                     <div className="row align-items-center post-control-upload">
