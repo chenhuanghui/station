@@ -91,6 +91,7 @@ export default class PostInput extends React.Component {
             if (currentComponent.state.isPosting) return;
             btnQueryEffectStart($(this))
             var postContent = $("#post-content").val()
+            // console.log("break a line test: ___", postContent.replace(/\n/g, "<br />"))
             var postAttachment = getAttachmentList()
             console.log("attachment: ", postAttachment)
             

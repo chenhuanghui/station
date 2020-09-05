@@ -133,6 +133,7 @@ export default class PostShow extends React.Component {
             getPostByID(curPostId)
             .then (post => {
                 console.log(post)
+                post.fields.content = post.fields.content.replace(/\n/g, "<br />")
                 this.setState({post_id: curPostId})
                 this.setState({postData: post.fields})
                 this.setState({postUserID: post.fields.userID})   
@@ -173,6 +174,7 @@ export default class PostShow extends React.Component {
             indicators: true
         }
         console.log("user from props: ", this.props.user)
+        // console.log("break line: ", postData && postData.content)
         return (
             <>
                 {this.props.children}
@@ -204,6 +206,7 @@ export default class PostShow extends React.Component {
                         ? <p contenteditable="true" onBlur={()=> this.updatePostContent(post_id, this.props.post_rec_id)} className="mb-3 post-content" id={`post-show-content-${post_id}`} dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
                         : <p className="mb-3 post-content" id={`post-show-content-${post_id}`} dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
                         }
+                        
                         
                         
                         
