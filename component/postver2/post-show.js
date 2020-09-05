@@ -127,6 +127,7 @@ export default class PostShow extends React.Component {
 
             getCommentByPostID(curPostId)
             .then (commentRes => {
+                console.log("comment: ", commentRes)
                 this.setState({comments: commentRes})
             })
         }
@@ -234,11 +235,14 @@ export default class PostShow extends React.Component {
                         <div id={`comment-block-${post_id}`}>
                             {comments && comments.map((item, index) => (
                                 <CommentShow key={index}
+                                comment_id = {item.fields.ID}
                                 avatar = {item.fields.userAvatar ? item.fields.userAvatar : "/assets/img/avatars/profiles/avatar-1.jpg"}
                                 content = {item.fields.content}
                                 author = {item.fields.userName}
+                                author_id = {item.fields.userID}
                                 createdAt = {item.fields.createdAt}
                                 attachments = {item.fields.attachments}
+                                rec_comment_id = {item.id}
                                 />
                             ))}
                         </div>
