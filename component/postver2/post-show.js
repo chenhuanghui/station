@@ -91,21 +91,12 @@ async function updateReaction(recPostID, userID, type) {
     }
 }
 
-function countReaction(postObj, type) {
-    var reactionList
-    if (type === 0) { // like
-        if (postObj.like) {
-            reactionList = JSON.parse("[" + postObj.like + "]")
-            return reactionList.length
-        } else {
-            return 0
-        }
-    } else { // dislike
-        if (postObj.dislike) {
-            reactionList = JSON.parse("[" + postObj.dislike + "]")
-            return reactionList.length
-        } else return 0
-    }    
+function countReaction(postObj) {
+    if (!postObj) return 0
+
+    var reactionList = []
+    reactionList = JSON.parse("[" + postObj + "]")
+    return reactionList.length
 }
 
 export default class PostShow extends React.Component {
@@ -114,11 +105,10 @@ export default class PostShow extends React.Component {
 
         this.state = {
             post_id: null,
-            postData: [],
             comments : [],
-            like:0,
+            like: 0,
             dislike: 0,
-            postUserID: null
+            author_id: null
         }
     }
     componentDidMount() {
@@ -130,20 +120,13 @@ export default class PostShow extends React.Component {
 
         if (curPostId !== prevPostId) {
             console.log("post_id UPDATE___: ", prevPostId, '-->', curPostId)
-            getPostByID(curPostId)
-            .then (post => {
-                console.log(post)
-                post.fields.content = post.fields.content.replace(/\n/g, "<br />")
-                this.setState({post_id: curPostId})
-                this.setState({postData: post.fields})
-                this.setState({postUserID: post.fields.userID})   
-                this.setState({like: countReaction(post.fields,0)}) 
-                this.setState({dislike: countReaction(post.fields,1)})  
-            })
-            
+            this.setState({post_id: curPostId})
+            this.setState({like: countReaction(this.props.like)}) 
+            this.setState({dislike: countReaction(this.props.dislike)}) 
+            this.setState({author_id: this.props.author_id})
+
             getCommentByPostID(curPostId)
             .then (commentRes => {
-                console.log("comment:", commentRes)
                 this.setState({comments: commentRes})
             })
         }
@@ -166,15 +149,14 @@ export default class PostShow extends React.Component {
     }
 
     render() {        
-        const {postData, post_id, comments, like, dislike, postUserID} = this.state
+        const {author_id, post_id, comments, like, dislike} = this.state
         const slideProperties = {
             arrows: false,
             infinite: false,
             autoplay:false,
             indicators: true
         }
-        console.log("user from props: ", this.props.user)
-        // console.log("break line: ", postData && postData.content)
+
         return (
             <>
                 {this.props.children}
@@ -184,36 +166,36 @@ export default class PostShow extends React.Component {
                             <div className="row align-items-center">
                                 <div className="col-auto">
                                     <a href="#!" className="avatar">
-                                        {postData && postData.userAvatar
-                                        ?    <img src={postData.userAvatar} alt={postData.userName} className="avatar-img rounded-circle"/>
-                                        :    <img src="/assets/img/avatars/profiles/avatar-1.jpg" alt={postData.userName} className="avatar-img rounded-circle"/>
-                                        }
-                                        
+                                        <img src={this.props.author_avatar} alt={this.props.author_name} className="avatar-img rounded-circle"/>                                        
                                     </a>
                                 </div>
                                 <div className="col ml-n2">
-                                    <h4 className="mb-1">{postData.userName}</h4>
+                                    <h4 className="mb-1">{this.props.author_name}</h4>
                                     <p className="card-text small text-muted"> 
                                         <span className="fe fe-clock mr-2"></span> 
-                                        <time dateTime="2018-05-24">{postData.createdAt ? `${new Date(postData.createdAt).toLocaleTimeString()}, ${new Date(postData.createdAt).toLocaleDateString()}`:null}</time>
+                                        <time dateTime="2018-05-24">{this.props.created_at ? `${new Date(this.props.created_at).toLocaleTimeString()}, ${new Date(this.props.created_at).toLocaleDateString()}`:null}</time>
                                     </p>
                                 </div>
                             </div>
 
                         </div>
-                        
-                        { cookies.userID === postUserID
-                        ? <p contenteditable="true" onBlur={()=> this.updatePostContent(post_id, this.props.post_rec_id)} className="mb-3 post-content" id={`post-show-content-${post_id}`} dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
-                        : <p className="mb-3 post-content" id={`post-show-content-${post_id}`} dangerouslySetInnerHTML={{__html:postData && postData.content}}></p>
+
+                        { cookies.userID === author_id
+                        ? 
+                            <p contentEditable="true" 
+                                className="mb-3 post-content" id={`post-show-content-${post_id}`}
+                                onBlur={()=> this.updatePostContent(post_id, this.props.post_rec_id)} 
+                                dangerouslySetInnerHTML={{__html:this.props.content.replace(/\n/g, "<br />")}}></p>
+                        : 
+                            <p className="mb-3 post-content" 
+                                id={`post-show-content-${post_id}`} 
+                                dangerouslySetInnerHTML={{__html:this.props.content.replace(/\n/g, "<br />")}}></p>
                         }
                         
-                        
-                        
-                        
-                        { postData && postData.attachments
+                        { this.props.attachments
                         ?    <div className="text-center mb-3">
                                 <Slide {...slideProperties}>
-                                    {postData.attachments.map((each, index) => (
+                                    {this.props.attachments.map((each, index) => (
                                     <div key={index} style={{width: "100%"}}>
                                         {each.type === "image/jpeg" || each.type === "image/gif"
                                         ? <img className="single_slider" style={{maxHeight:"640px"}} src={each.url} className="img-fluid rounded"/>
@@ -228,13 +210,18 @@ export default class PostShow extends React.Component {
                             </div>
                         : null
                         }
+
                         <div className="mb-3">
                             <div className="row">
                                 <div className="col">
-                                    <span className="btn btn-sm btn-white mr-2" onClick={() => this.reactionAction(this.props.post_rec_id, this.props.user.ID,0)}>
+                                    <span 
+                                        className="btn btn-sm btn-white mr-2" 
+                                        onClick={() => this.reactionAction(this.props.post_rec_id, this.props.user.ID,0)}>
                                         👍 {like}
                                     </span>
-                                    <span className="btn btn-sm btn-white" onClick={() => this.reactionAction(this.props.post_rec_id, this.props.user.ID,1)}>
+                                    <span 
+                                        className="btn btn-sm btn-white" 
+                                        onClick={() => this.reactionAction(this.props.post_rec_id, this.props.user.ID,1)}>
                                         😬 {dislike}
                                     </span>
                                     

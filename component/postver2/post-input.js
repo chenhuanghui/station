@@ -81,7 +81,8 @@ export default class PostInput extends React.Component {
             user: null,
             brand: null,
             postAttachment: [],
-            isPosting: false
+            isPosting: false,
+            contentLength : 0
         }
     }
     componentDidMount() {
@@ -130,22 +131,30 @@ export default class PostInput extends React.Component {
         this.setState({postAttachment:curPostAttachment})
     }
 
+    countContentLength = () => {
+        var t = $("#post-content").val().length
+        this.setState({contentLength: t})
+    }
+
     render() {      
-        const {postAttachment} = this.state
+        const {postAttachment, contentLength} = this.state
         return (
             <>
             {this.props.children}
             <div className="card post-input">
                 <div className="card-body">
-                    <form>
-                        <div className="form-group">
-                            <textarea className="form-control form-control-flush form-control-auto" id="post-content" data-toggle="autosize" rows="3" placeholder="Start a post..." style={{"overflow": "hidden", "overflowWrap": "break-word"}}></textarea>
-                        </div>
-                    </form>
+                    <div className="form-group">
+                        <textarea 
+                            className="form-control form-control-flush form-control-auto" 
+                            id="post-content" data-toggle="autosize" rows="3" placeholder="Start a post..." 
+                            onKeyUp={() => {this.countContentLength()}}
+                        >
+                        </textarea>
+                    </div>
 
                     <div className="row align-items-center post-control-upload">
                         <div className="col">
-                            <small className="text-muted">0/500</small>
+                            <small className="text-muted">{contentLength}/500</small>
                         </div>                        
                         <div className="col-auto">
                             <div className="text-muted">

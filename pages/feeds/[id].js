@@ -49,7 +49,8 @@ function LayoutFeedByStation ({brand, feed}) {
     const [sID, setSID] = useState(null);
     const [user, setUser] = useState([])
 
-    useEffect(() => {        
+    useEffect(() => {    
+        console.log("feed onload: ", feed)    
         // if not user --> redirect to Sign In page
         if(!cookies.isLoggedIn) {
             Router.push('/signin')
@@ -83,6 +84,14 @@ function LayoutFeedByStation ({brand, feed}) {
                             {feed && feed.map((item, index)=> (
                                 <PostShow key={index}
                                     post_id = {item.fields.ID}
+                                    content = {item.fields.content}
+                                    attachments = {item.fields.attachments}
+                                    created_at = {item.fields.createdAt}
+                                    author_name = {item.fields.userName}
+                                    author_avatar = {item.fields.userAvatar}
+                                    author_id = {item.fields.userID}
+                                    like = {item.fields.like}
+                                    dislike = {item.fields.dislike}
                                     user = {user}
                                     post_rec_id = {item.id}
                                 />
