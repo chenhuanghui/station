@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import loadable from '@loadable/component';
 
+import TextareaAutosize from 'react-textarea-autosize';
 import ImageAttachment from '../attachment/image-attachment'
 // ====================================
 // INIT GLOBAL VARIABLES
@@ -145,8 +146,10 @@ export default class CommentInput extends React.Component {
                     </div>
                     <div className="col ml-n2">
                         <div className="mt-1">
-                            <label className="sr-only">Leave a comment...</label>
-                            <textarea id={`post-comment-${this.props.post_id}`} className="form-control form-control-flush comment" data-toggle="autosize" rows="1" placeholder="Leave a comment" style={{"overflow": "hidden", "overflowWrap": "break-word"}}></textarea>
+                            <TextareaAutosize 
+                                className="form-control form-control-flush comment"
+                                id={`post-comment-${this.props.post_id}`} data-toggle="autosize" rows="3" placeholder="Leave a comment" 
+                            />
                         </div>
                     </div>
                     <div className="col-auto align-self-end">
