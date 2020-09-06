@@ -4,6 +4,7 @@ import CommentShow from '../../component/commentsver2/comment-show'
 import CommentInput from '../../component/commentsver2/comment-input'
 import { Slide } from 'react-slideshow-image';
 import { post } from 'jquery';
+import ImageGallery from 'react-image-gallery';
 
 const AirtablePlus = require('airtable-plus');  
 const airtableFEED = new AirtablePlus({
@@ -108,7 +109,8 @@ export default class PostShow extends React.Component {
             comments : [],
             like: 0,
             dislike: 0,
-            author_id: null
+            author_id: null,
+            attachments: []
         }
     }
     componentDidMount() {
@@ -124,6 +126,20 @@ export default class PostShow extends React.Component {
             this.setState({like: countReaction(this.props.like)}) 
             this.setState({dislike: countReaction(this.props.dislike)}) 
             this.setState({author_id: this.props.author_id})
+            console.log("attachments: ",this.props.attachments)            
+            
+            if (this.props.attachments) {
+                var temp = []
+                this.props.attachments.forEach(item => {
+                    var t = {
+                        original : item.url,
+                        thumbnail: item.thumbnails.small.url
+                    }
+                    temp.push(t)
+                })
+                console.log("list attachments: ", temp)
+                this.setState({attachments: temp})
+            }            
 
             getCommentByPostID(curPostId)
             .then (commentRes => {
@@ -150,13 +166,24 @@ export default class PostShow extends React.Component {
     }
 
     render() {        
-        const {author_id, post_id, comments, like, dislike} = this.state
+        const {author_id, post_id, comments, like, dislike, attachments} = this.state
         const slideProperties = {
             arrows: false,
             infinite: false,
             autoplay:false,
             indicators: true
         }
+
+        const imageGalleryConfig = {
+            showIndex : true,
+            lazyLoad : true,
+            showBullets: true,
+            showPlayButton: false,
+            showNav: false,
+            showThumbnails: false
+        }
+        
+      
 
         return (
             <>
@@ -192,8 +219,20 @@ export default class PostShow extends React.Component {
                                 id={`post-show-content-${post_id}`} 
                                 dangerouslySetInnerHTML={{__html:this.props.content.replace(/\n/g, "<br />")}}></p>
                         }
+                        {attachments.length > 0
+                        ?
+                            <div className="row">
+                                <div className="col">
+                                    <ImageGallery  {...imageGalleryConfig}
+                                        className="img-fluid rounded"
+                                        items={attachments}
+                                    />
+                                </div>                            
+                            </div>
+                        : null
+                        }
                         
-                        { this.props.attachments
+                        {/* { this.props.attachments
                         ?    <div className="text-center mb-3">
                                 <Slide {...slideProperties}>
                                     {this.props.attachments.map((each, index) => (
@@ -210,7 +249,7 @@ export default class PostShow extends React.Component {
                                 </Slide>
                             </div>
                         : null
-                        }
+                        } */}
 
                         <div className="mb-3">
                             <div className="row">
