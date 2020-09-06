@@ -176,7 +176,6 @@ export default class PostShow extends React.Component {
 
         const imageGalleryConfig = {
             showIndex : true,
-            lazyLoad : true,
             showBullets: true,
             showPlayButton: false,
             showNav: false,
@@ -222,7 +221,7 @@ export default class PostShow extends React.Component {
                         {attachments.length > 0
                         ?
                             <div className="row">
-                                <div className="col">
+                                <div className="col mb-3">
                                     <ImageGallery  {...imageGalleryConfig}
                                         className="img-fluid rounded"
                                         items={attachments}
