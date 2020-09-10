@@ -132,13 +132,11 @@ export default class PostShow extends React.Component {
                 var temp = []
                 console.log("attachments: ", this.props.attachments)
                 this.props.attachments.forEach(item => {
-                    if (item.type === "image/jpeg" || item.type === "image/gif") {
-                        var t = {
-                            original : item.url,
-                            thumbnail: item.thumbnails.small.url
-                        }
-                        temp.push(t)
+                    var t = {
+                        original : item.url,
+                        type: item.type
                     }
+                    temp.push(t)
                 })
                 console.log("list attachments: ", temp)
                 this.setState({attachments: temp})
@@ -221,7 +219,7 @@ export default class PostShow extends React.Component {
                                 id={`post-show-content-${post_id}`} 
                                 dangerouslySetInnerHTML={{__html:this.props.content.replace(/\n/g, "<br />")}}></p>
                         }
-                        {attachments.length > 0
+                        {/* {attachments.length > 0
                         ?
                             <div className="row">
                                 <div className="col mb-3">
@@ -232,26 +230,26 @@ export default class PostShow extends React.Component {
                                 </div>                            
                             </div>
                         : null
-                        }
-                        
-                        {/* { this.props.attachments
-                        ?    <div className="text-center mb-3">
-                                <Slide {...slideProperties}>
-                                    {this.props.attachments.map((each, index) => (
-                                    <div key={index} style={{width: "100%"}}>
-                                        {each.type === "image/jpeg" || each.type === "image/gif"
-                                        ? <img className="single_slider" style={{maxHeight:"640px"}} src={each.url} className="img-fluid rounded"/>
-                                        : 
-                                            <video width="320" height="640" controls>
-                                                <source src={each.url} type="video/mp4"/>
+                        } */}
+                        {this.props.attachments && this.props.attachments.length > 0
+                        ? 
+                            <div className="container no-scrollbar mb-3">
+                            {
+                                this.props.attachments.map((item, index) => (
+                                    <div className="item">
+                                        {item.type === "video/quicktime"
+                                        ? 
+                                            <video controls autoplay style={{maxHeight:"640px"}}>
+                                                <source src={item.url} type="video/mp4"/>
                                             </video>
-                                        }
+                                        : <img className="img-fluid rounded" src={item.url} style={{maxHeight:"640px"}}/>
+                                        }                                        
                                     </div>
-                                    ))}
-                                </Slide>
+                                ))
+                            }
                             </div>
                         : null
-                        } */}
+                        }                    
 
                         <div className="mb-3">
                             <div className="row">
@@ -296,7 +294,39 @@ export default class PostShow extends React.Component {
                     </div>
                 </div>  
                 <style jsx>{`
-                .post-content-edit:hover{cursor: pointer}
+                :root {
+                    --gutter-grid-padding: 20px;
+                }
+                .post-content-edit:hover{cursor: pointer}                 
+                .container {
+                    display: grid;
+                    grid-gap: 15px;
+                    grid-template-columns: 100%;
+                    grid-template-rows: 1fr;
+                    grid-auto-flow: column;
+                    grid-auto-columns: 100%;
+                    overflow-x: scroll;
+                }
+                .no-scrollbar {
+                    scrollbar-width: none;
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                  }
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .container > div > img {
+                    width: 100%;
+                    // height: 100%;
+                    object-fit: contain;
+                    max-heigth: 640px;
+                }
+
+                .container > div > video {
+                    width: 100%;
+                    max-heigth: 500px;
+                }
+
                 `}</style>
             </>     
         );

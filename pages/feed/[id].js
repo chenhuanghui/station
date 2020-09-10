@@ -72,7 +72,7 @@ function LayoutFeedByStation ({stationPost}) {
                             <PostInput>
                                 <span className="hide" data={sID}></span>
                             </PostInput>
-                            
+                        
                             {stationPost && stationPost.map((item, index) => (
                                 item.fields.Post
                                 ? 
