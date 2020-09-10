@@ -130,12 +130,15 @@ export default class PostShow extends React.Component {
             
             if (this.props.attachments) {
                 var temp = []
+                console.log("attachments: ", this.props.attachments)
                 this.props.attachments.forEach(item => {
-                    var t = {
-                        original : item.url,
-                        thumbnail: item.thumbnails.small.url
+                    if (item.type === "image/jpeg" || item.type === "image/gif") {
+                        var t = {
+                            original : item.url,
+                            thumbnail: item.thumbnails.small.url
+                        }
+                        temp.push(t)
                     }
-                    temp.push(t)
                 })
                 console.log("list attachments: ", temp)
                 this.setState({attachments: temp})

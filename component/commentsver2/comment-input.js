@@ -141,7 +141,10 @@ export default class CommentInput extends React.Component {
                 <div className="row comment-input">
                     <div className="col-auto">
                         <div className="avatar avatar-sm">
-                            <img src={this.props.user.avatar ? this.props.user.avatar[0].url : ''} alt={this.props.user.name} className="avatar-img rounded-circle"/>
+                            {this.props.user 
+                            ? <img src={this.props.user.avatar ? this.props.user.avatar[0].url : ''} alt={this.props.user.name} className="avatar-img rounded-circle"/>
+                            : <img src='' alt={this.props.user.name} className="avatar-img rounded-circle"/>
+                            }
                         </div>
                     </div>
                     <div className="col ml-n2">
