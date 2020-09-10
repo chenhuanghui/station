@@ -237,7 +237,7 @@ export default class PostShow extends React.Component {
                             {
                                 this.props.attachments.map((item, index) => (
                                     <div className="item">
-                                        {item.type === "video/quicktime"
+                                        {item.type === "video/quicktime" || item.type === "video/mp4"
                                         ? 
                                             <video controls autoplay style={{maxHeight:"640px"}}>
                                                 <source src={item.url} type="video/mp4"/>
