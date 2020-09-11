@@ -83,7 +83,8 @@ export default class PostInput extends React.Component {
         
         $(".btn-action-post").click(function(){
             if (currentComponent.state.isPosting) return;
-            
+            if (countContentLength() === 0) alert("Bạn quên nhập nội dung...")
+
             btnQueryEffectStart($(this))
             var postContent = $("#post-content").val()
             var postAttachment = getAttachmentList()
